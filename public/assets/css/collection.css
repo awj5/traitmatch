@@ -1,0 +1,398 @@
+/* Collection */
+
+#collection-game {
+    height: 100%;
+    min-height: 576px;
+    max-height: 1088px;
+    margin: auto;
+    padding: 32px;
+    box-sizing: border-box;
+    display: flex;
+    visibility: hidden;
+}
+
+#game-board {
+    height: calc(100% - 4px);
+    border: 2px solid #111;
+    aspect-ratio: 5/4;
+}
+
+.dark-mode #game-board {
+    border-color: #EEE;
+}
+
+#game-board a {
+    height: 25%;
+    float: left;
+    border: 2px solid #111;
+    box-sizing: border-box;
+    pointer-events: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.dark-mode #game-board a {
+    border-color: #EEE;
+}
+
+#game-board a.selected {
+    z-index: 1;
+    border-color: transparent;
+    outline: 4px solid #0F0;
+    border-color: #0F0;
+}
+
+#game-board a.wildcard.selected {
+    border-color: #FF0;
+    outline-color: #FF0 !important;
+}
+
+#game-board a img {
+    height: 100%;
+    transform: scale(0);
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+}
+
+#game-board a p {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 16px;
+    opacity: 0;
+    color: #EEE;
+    line-height: 2;
+}
+
+#game-board a span {
+    display: block;
+}
+
+#game-board span svg {
+    height: 24px;
+    margin-right: 4px;
+    vertical-align: -6px;
+}
+
+svg.svg-star {
+    fill: #FFD700 !important;
+}
+
+svg.svg-diamond {
+    fill: #87CEEB !important;
+}
+
+svg.svg-heart {
+    fill: #FF0000 !important;
+}
+
+#collection-game aside {
+    width: 192px;
+    height: 100%;
+    position: relative;
+    padding-left: 16px;
+    box-sizing: border-box;
+}
+
+#collection-game aside h3 {
+    margin-bottom: 12px;
+    line-height: 1;
+}
+
+h3#game-total {
+    font-size: 36px;
+}
+
+h3#game-item-counter {
+    font-size: 18px;
+}
+
+span.game-heading {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+h3#game-total span.game-heading,
+h3#game-item-counter span.game-heading {
+    margin-bottom: 4px;
+}
+
+#collection-game aside svg {
+    fill: #111;
+    vertical-align: -7px;
+    margin-right: 4px;
+    height: 32px;
+}
+
+.dark-mode #collection-game aside svg {
+    fill: #EEE;
+}
+
+#game-controls {
+    position: absolute;
+    bottom: 0;
+}
+
+#game-controls a {
+    line-height: 1;
+    display: block;
+    font-size: 24px;
+    margin-top: 12px;
+    transition: opacity 0.15s ease-in-out;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+#game-controls.enabled a {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#game-controls label {
+    margin-top: 12px;
+    display: block;
+    cursor: pointer;
+}
+
+#game-controls input {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-top;
+    margin: 0;
+    margin-right: 6px;
+    accent-color: #111;
+}
+
+@-moz-document url-prefix() {
+    #game-controls input {
+        vertical-align: text-bottom;
+    }
+}
+
+.dark-mode #game-controls input {
+    accent-color: #EEE;
+}
+
+.score-icon {
+    position: fixed;
+    transition: all 0.5s ease-in;
+    z-index: 1;
+}
+
+.score-icon svg {
+    height: 24px;
+}
+
+.animate-score {
+    animation: animateScore32 ease-in-out 0.5s forwards;
+}
+
+#traits-hover {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2;
+    display: none;
+    color: #EEE;
+    padding: 12px;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+#traits-hover h4 {
+    line-height: 1;
+    font-size: 24px;
+}
+
+#traits-hover img {
+    display: none;
+    width: 288px;
+    margin-top: 20px;
+    border: 4px solid #EEE;
+    user-drag: none;
+    -webkit-user-drag: none;
+}
+
+#traits-hover p {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+span#hover-type {
+    color: #999;
+}
+
+@keyframes animateScore32 {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(3);
+    }
+
+    100% {
+        transform: scale(1);
+        height: 32px;
+    }
+}
+
+@keyframes animateScore40 {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(3);
+    }
+
+    100% {
+        transform: scale(1);
+        height: 40px;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    #collection-game {
+        padding: 24px;
+        min-height: 688px;
+        max-height: 1328px;
+    }
+
+    #game-board {
+        aspect-ratio: 4/5;
+    }
+
+    #game-board a {
+        height: 20%;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    #collection-game {
+        padding: 12px;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        max-width: 536px;
+        display: inline;
+    }
+
+    #game-board {
+        aspect-ratio: auto;
+    }
+
+    #game-board a {
+        width: 25%;
+        height: auto;
+    }
+
+    #game-board a img {
+        width: 100%;
+        height: auto;
+    }
+
+    #game-board a p {
+        line-height: 1.5;
+        font-size: 14px;
+    }
+
+    #game-board span svg {
+        height: 16px;
+        vertical-align: -3px;
+    }
+
+    #collection-game aside {
+        width: 100%;
+        height: auto;
+        padding-left: 0;
+        padding-top: 4px;
+    }
+
+    #collection-game aside h3 {
+        font-size: 18px;
+        margin-bottom: 0;
+        margin-top: 8px;
+        float: left;
+        width: 88px;
+    }
+
+    #collection-game aside h3#game-total {
+        font-size: 30px;
+    }
+
+    #collection-game aside h3#game-item-counter {
+        font-size: 16px;
+    }
+
+    span.game-heading {
+        font-size: 12px;
+    }
+
+    #collection-game aside h3 svg {
+        height: 24px;
+        vertical-align: -5px;
+    }
+
+    #game-controls {
+        top: 0px;
+        bottom: auto;
+        right: 0;
+    }
+
+    #game-controls label {
+        text-align: right;
+    }
+
+    .score-icon svg {
+        height: 16px;
+    }
+
+    .animate-score {
+        animation: animateScore24 ease-in-out 0.5s forwards;
+    }
+
+    #traits-hover {
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #traits-hover h4 {
+        font-size: 30px;
+        width: 296px;
+    }
+
+    @media screen and (orientation: portrait) {
+        #traits-hover img {
+            display: inline;
+        }
+    }
+
+    #traits-hover p {
+        font-size: 14px;
+        width: 296px;
+    }
+
+    @keyframes animateScore24 {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(3);
+        }
+
+        100% {
+            transform: scale(1);
+            height: 24px;
+        }
+    }
+}

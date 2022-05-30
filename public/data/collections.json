@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "cryptorayrays-collection",
+    "name": "CryptoRayRays",
+    "enabled": false,
+    "contract": "0x8d4e2435c262eb6df10e5e4672a8f07e42d8d67e"
+  },
+  {
+    "slug": "dourdarcels",
+    "name": "Dour Darcels",
+    "enabled": false,
+    "contract": "0x8d609bd201beaea7dccbfbd9c22851e23da68691"
+  },
+  {
+    "slug": "foxfam",
+    "name": "FoxFam",
+    "enabled": false,
+    "contract": "0x7cba74d0b16c8e18a9e48d3b7404d7739bb24f23"
+  },
+  {
+    "slug": "murakami-flowers-2022-official",
+    "name": "Murakami",
+    "enabled": false,
+    "contract": "0x7d8820fa92eb1584636f4f5b8515b5476b75171a"
+  }
+]

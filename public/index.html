@@ -1,0 +1,120 @@
+<!--
+
+Code by Adam Johnson
+https://github.com/awj5
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TraitMatch</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" sizes="196x196" href="/assets/img/favicon-196.png">
+        <link rel="icon" type="image/png" sizes="160x160" href="/assets/img/favicon-160.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png">
+        <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+        <link rel="preload" href="/assets/fonts/Nurom-Bold.woff2" as="font" crossorigin="anonymous" />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="/assets/css/global.css" />
+    </head>
+
+    <body class="no-touch">
+        <!-- Sections -->
+        <section id="section-home">
+            <h2>Coming soon</h2>
+        </section>
+
+        <section id="section-collection">
+            <div id="collection-game">
+                <div id="game-board">
+                    <a id="board-item-1"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-2"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-3"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-4"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-5"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-6"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-7"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-8"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-9"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-10"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-11"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-12"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-13"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-14"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-15"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-16"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-17"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-18"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-19"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <a id="board-item-20"><img src="/assets/img/placeholder.png" alt="" /><p></p></a>
+                    <div class="clear"></div>
+                </div>
+
+                <aside>
+                    <h3 id="game-total"><span class="game-heading">Total Score</span><span class="game-score">0</span></h3>
+                    <h3 id="game-matches"><span class="game-heading">Matches</span><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" class="svg-star"><g><path d="M0,0h24v24H0V0z" fill="none"/><path d="M0,0h24v24H0V0z" fill="none"/></g><g><path d="M12,17.27L18.18,21l-1.64-7.03L22,9.24l-7.19-0.61L12,2L9.19,8.63L2,9.24l5.46,4.73L5.82,21L12,17.27z"/></g></svg><span class="game-score">0</span></h3>
+                    <div class="clear"></div>
+                    <h3 id="game-rarity"><span class="game-heading">Rarity Bonus</span><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" class="svg-diamond"><g><rect fill="none" height="24" width="24"/></g><g><path d="M19,3H5L2,9l10,12L22,9L19,3z M9.62,8l1.5-3h1.76l1.5,3H9.62z M11,10v6.68L5.44,10H11z M13,10h5.56L13,16.68V10z M19.26,8 h-2.65l-1.5-3h2.65L19.26,8z M6.24,5h2.65l-1.5,3H4.74L6.24,5z"/></g></svg><span class="game-score">0</span></h3>
+                    <h3 id="game-streak"><span class="game-heading">Streak Bonus</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-heart"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="game-score">0</span></h3>
+                    <div class="clear"></div>
+                    <h3 id="game-item-counter"><span class="game-heading">Cleared</span><span class="counter"></span></h3>
+                    <div class="clear"></div>
+
+                    <div id="game-controls">
+                        <a href="javascript: shuffle(true);" id="controls-shuffle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>Shuffle</a>
+                        <a href="javascript: restart(true);" id="controls-restart"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><rect fill="none" height="24" width="24"/><rect fill="none" height="24" width="24"/><rect fill="none" height="24" width="24"/></g><g><g/><path d="M12,5V1L7,6l5,5V7c3.31,0,6,2.69,6,6s-2.69,6-6,6s-6-2.69-6-6H4c0,4.42,3.58,8,8,8s8-3.58,8-8S16.42,5,12,5z"/></g></svg>Restart</a>
+                        <label><input type="checkbox" id="controls-trait-hints" checked />Trait hints</label>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="section-how">
+            <h2>Coming soon</h2>
+        </section>
+
+        <section id="section-leaderboards">
+            <h2>Coming soon</h2>
+        </section>
+
+        <!-- Header -->
+        <header>
+            <h1><a href="javascript: navClick('.');"><img src="/assets/img/icon.png" alt="" />TraitMatch</a></h1>
+            <a href="javascript: toggleNav();" id="header-burger"><span></span><span></span><span></span></a>
+
+            <nav>
+                <a href="javascript: toggleOverlay('Collections', 'Choose a supported collection below. You must own an NFT from the collection to play.');" class="nav-item" id="nav-item-collection"><img src="" alt="" class="collection-icon" /><span>Collections</span></a>
+                <a href="javascript: navClick('how');" class="nav-item" id="nav-item-how">How to Play</a>
+                <a href="javascript: navClick('leaderboards');" class="nav-item" id="nav-item-leaderboards">Leaderboards</a>
+                <a href="javascript: connectWallet();" class="nav-item" id="nav-item-connect">Connect Wallet</a>
+                <a href="javascript: toggleDarkMode();" id="nav-dark-mode" title="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><rect fill="none" height="24" width="24"/><path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg></a>
+            </nav>
+        </header>
+
+        <div id="traits-hover"><h4></h4><img src="" alt="" /><p></p></div>
+
+        <!-- Overlay -->
+        <div id="overlay">
+            <div id="overlay-bg"></div>
+
+            <div id="overlay-wrapper">
+                <div id="overlay-window">
+                    <a href="javascript: toggleOverlay();" id="overlay-close" title="Close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg></a>
+                    <h2></h2>
+                    <p></p>
+                    <div id="overlay-body"></div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JS -->
+        <script src="/assets/js/plugins/pattern.min.js"></script>
+        <script src="/assets/js/global.js"></script>
+        <script src="/assets/js/collection.js"></script>
+    </body>
+</html>
