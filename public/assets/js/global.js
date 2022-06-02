@@ -81,6 +81,22 @@ async function getData(path) {
     return data;
 }
 
+async function postData(path, body) {
+    const data = await fetch(path, {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+    })
+    .then((response) => {
+        return response.status;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
+    return data;
+}
+
 function toggleDarkMode() {
     const root = document.querySelector('html');
 
@@ -226,39 +242,43 @@ async function getAccountCollections(address) {
     var collections = [];
 
     if (address) {
-        var contracts = await getData('/api/contracts/' + address);
-        var nfts = contracts.ownedNfts;
-        const supported = await getSupportedCollections();
-        var page;
+        try {
+            var contracts = await getData('/api/contracts/' + address);
+            var nfts = contracts.ownedNfts;
+            const supported = await getSupportedCollections();
+            var page;
 
-        // Loop Alchemy pages
-        for (let x = 0; x < Math.ceil(contracts.totalCount / 100); x++) {
-            if (x > 0) {
-                // Not first page
-                contracts = await getData(`/api/contracts/${ address }/${ page }`);
-                nfts = contracts.ownedNfts;
-            }
+            // Loop Alchemy pages
+            for (let x = 0; x < Math.ceil(contracts.totalCount / 100); x++) {
+                if (x > 0) {
+                    // Not first page
+                    contracts = await getData(`/api/contracts/${ address }/${ page }`);
+                    nfts = contracts.ownedNfts;
+                }
 
-            // Set next page UUID
-            if (contracts.pageKey) {
-                page = contracts.pageKey;
-            }
+                // Set next page UUID
+                if (contracts.pageKey) {
+                    page = contracts.pageKey;
+                }
 
-            // Verify if owned collection supported
-            for (let x = 0; x < nfts.length; x++) {
-                let contract = nfts[x].contract.address;
+                // Verify if owned collection supported
+                for (let x = 0; x < nfts.length; x++) {
+                    let contract = nfts[x].contract.address;
 
-                // Loop supported contracts
-                for (let x = 0; x < supported.length; x++) {
-                    let slug = supported[x].slug;
+                    // Loop supported contracts
+                    for (let x = 0; x < supported.length; x++) {
+                        let slug = supported[x].slug;
 
-                    // Check if collection in account wallet
-                    if (!collections.includes(slug) && supported[x].contract === contract && (supported[x].enabled || window.pattern === slug && await checkBeta(slug, address))) {
-                        // Add slug to array
-                        collections.push(slug);
+                        // Check if collection in account wallet
+                        if (!collections.includes(slug) && supported[x].contract === contract && (supported[x].enabled || window.pattern === slug && await checkBeta(slug, address))) {
+                            // Add slug to array
+                            collections.push(slug);
+                        }
                     }
                 }
             }
+        } catch (error) {
+            console.error(error);
         }
     }
 

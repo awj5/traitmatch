@@ -25,6 +25,7 @@ app.listen(port, () => {
 
 // Router
 
+app.use(Express.json())
 const router = new Express.Router()
 app.use('/', router)
 
@@ -40,8 +41,8 @@ router.get('/*', function (req, res, next) {
 
 /* Endpoints */
 
-app.get('/api/scores/:wallet/:slug', DB.getScores)
-app.get('/api/os/collection/:slug', DB.getOSCollection)
+app.post('/api/scores', DB.addScore)
+app.get('/api/scores/:slug/:wallet', DB.getUserScores)
 app.get('/api/nft/:contract/:token', Alchemy.getNFT)
 app.get('/api/contracts/:wallet/:page?', Alchemy.getContracts)
 app.get('/api/nfts/:wallet/:collection', Alchemy.getContractNFTs)

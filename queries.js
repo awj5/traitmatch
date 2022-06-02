@@ -14,26 +14,44 @@ const pool = new PG.Pool({
 
 /* Queries */
 
-const getScores = (request, response) => {
-    pool.query('SELECT * FROM scores WHERE wallet = $1 ORDER BY score', [request.params.wallet], (error, results) => {
-        if (error) {
-            throw error
-        }
+async function getHighScoreID(slug, wallet) {
+    var response
+    const select = await pool.query('SELECT * FROM scores WHERE collection = $1 AND wallet = $2 ORDER BY score DESC', [slug, wallet])
 
-        response.status(200).json(results.rows)
-    })
+    if (select.rows.length) {
+        response = select.rows[0].id
+    }
+
+    return response
 }
 
-const getOSCollection = (request, response) => {
-    Request('https://api.opensea.io/api/v1/collection/' + request.params.slug, function (error, results) {
-        if (error) {
-            throw error
-        }
+const addScore = async (request, response) => {
+    const { slug, wallet, score } = request.body
 
-        response.status(200).send(results.body)
-    });
+    // Add user new score
+    const insert = await pool.query('INSERT INTO scores (collection, wallet, score) VALUES ($1, $2, $3) RETURNING id', [slug, wallet, score])
+    response.status(201).send(insert.rows[0].id.toString())
+
+    const highScoreID = await getHighScoreID(slug, wallet)
+
+    if (highScoreID) {
+        // Clear scores older than 1 month and not high score
+        const select = await pool.query('SELECT * FROM scores WHERE collection = $1 AND wallet = $2 AND id != $3 AND date < now() - interval \'1 month\'', [slug, wallet, highScoreID])
+
+        if (select.rows.length) {
+            // Loop and delete
+            for (let x = 0; x < select.rows.length; x++) {
+                pool.query('DELETE FROM scores WHERE id = $1', [select.rows[x].id])
+            }
+        }
+    }
+}
+
+const getUserScores = async (request, response) => {
+    const select = await pool.query('SELECT * FROM scores WHERE collection = $1 AND wallet = $2 ORDER BY score DESC', [request.params.slug, request.params.wallet])
+    response.status(200).json(select.rows)
 }
 
 /* Export */
 
-export default { getScores, getOSCollection }
+export default { addScore, getUserScores }

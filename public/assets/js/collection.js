@@ -125,10 +125,17 @@ async function loadCollection() {
             window.scoreMatches = localStorage['tmScoreMatches' + window.collection] ? localStorage['tmScoreMatches' + window.collection] : 0;
             window.scoreRarity = localStorage['tmScoreRarity' + window.collection] ? localStorage['tmScoreRarity' + window.collection] : 0;
             window.scoreStreak = localStorage['tmScoreStreak' + window.collection] ? localStorage['tmScoreStreak' + window.collection] : 0;
-            const tokens = await getData(`/api/nfts/${ await getWalletAddress() }/${ window.contract }`); // Get user collection NFTs
+            var nfts = [];
+
+            // Get user collection owned NFTs
+            try {
+                const tokens = await getData(`/api/nfts/${ await getWalletAddress() }/${ window.contract }`);
+                nfts = tokens.ownedNfts;
+            } catch (error) {
+                console.error(error);
+            }
 
             if (window.collection === window.pattern) {
-                const nfts = tokens.ownedNfts;
                 window.collectionTokens = []; // Reset
 
                 for (let x = 0; x < nfts.length; x++) {
@@ -225,14 +232,14 @@ async function resetItem(num) {
     await image.decode();
 }
 
-function setItem(num, date, shuffle) {
+function setItem(num, date, shuffle, swapped) {
     // Check if there is enough items left to add to board
     if (date === window.shuffleDate && window.boardItems.length < window.items.length) {
         const rand = window.items[Math.floor(Math.random() * window.items.length)]; // Random item from array
 
         if (!window.boardItems.includes(rand)) {
             window.boardItems.push(rand); // Add to board
-            loadItem(num, rand, date);
+            loadItem(num, rand, date, swapped);
 
             // Next item
             if (shuffle && num < 20) {
@@ -245,7 +252,7 @@ function setItem(num, date, shuffle) {
     }
 }
 
-async function loadItem(num, item, date) {
+async function loadItem(num, item, date, swapped) {
     const asset = await getData(`/api/nft/${ window.contract }/${ item }`);
     //console.log(asset);
 
@@ -289,14 +296,15 @@ async function loadItem(num, item, date) {
 
         image.onload = () => {
             if (date === window.shuffleDate) {
-                boardItem.style.pointerEvents = 'auto'; // Enable
                 image.classList.add('scale-up-1-025'); // Scale in
             }
 
             image.onload = null;
         }
-    } else if (date === window.shuffleDate) {
-        // API error
+
+        boardItem.style.pointerEvents = 'auto'; // Enable
+    } else if (date === window.shuffleDate && !swapped) {
+        // API error - Try swapping token only once
         setTimeout(() => {
             swapItem(num, item, date);
         }, 1000); // Take a beat after an API error
@@ -311,7 +319,7 @@ function swapItem(num, item, date) {
             const index = window.items.indexOf(item);
             window.items.splice(index, 1); // Remove old
             window.items.push(randItem); // Add new
-            setItem(num, date, false);
+            setItem(num, date, false, true);
         } else {
             // Try again
             swapItem(num, item, date);
@@ -480,7 +488,8 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
             // Check if game over
             if (!window.items.length) {
-                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored ${ localStorage['tmScoreTotal' + window.pattern] }<br />Your high score is XXXXX`);
+                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.pattern] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.pattern]) }</span>`);
+                recordScore(localStorage['tmScoreTotal' + window.pattern]);
                 restart(false);
             } else if (window.items.length === 1) {
                 // Clear last item automatically
@@ -494,11 +503,33 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 localStorage['tmOB3'] = true;
             } else if (window.boardItems.length < 20 && !checkMatches()) {
                 // No more matches possible
-                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored ${ localStorage['tmScoreTotal' + window.pattern] }<br />Your high score is XXXXX`);
+                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.pattern] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.pattern]) }</span>`);
+                recordScore(localStorage['tmScoreTotal' + window.pattern]);
                 restart(false);
             }
         }
     }, 3150);
+
+    async function getHighScore(score) {
+        const scores = await getData(`/api/scores/${ window.pattern }/${ await getWalletAddress() }`);
+
+        // Is latest score the highest?
+        if (scores.length && scores[0].score > score) {
+            score = scores[0].score;
+        }
+
+        return score;
+    }
+
+    async function recordScore(score) {
+        const obj = {
+            slug: window.pattern,
+            wallet: await getWalletAddress(),
+            score: score
+        };
+
+        postData('/api/scores', obj); // Insert
+    }
 
     function checkMatches() {
         var matchesFound = false;
