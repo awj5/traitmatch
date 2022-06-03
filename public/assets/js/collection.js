@@ -511,14 +511,19 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
     }, 3150);
 
     async function getHighScore(score) {
-        const scores = await getData(`/api/scores/${ window.pattern }/${ await getWalletAddress() }`);
+        try {
+            const scores = await getData(`/api/scores/${ window.pattern }/${ await getWalletAddress() }`);
 
-        // Is latest score the highest?
-        if (scores.length && scores[0].score > score) {
-            score = scores[0].score;
+            // Is latest score the highest?
+            if (scores.length && scores[0].score > score) {
+                score = scores[0].score;
+            }
+
+            return score;
+        } catch (error) {
+            console.error(error);
+            return null;
         }
-
-        return score;
     }
 
     async function recordScore(score) {
