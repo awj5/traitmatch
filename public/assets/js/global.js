@@ -270,7 +270,7 @@ async function getAccountCollections(address) {
                         let slug = supported[x].slug;
 
                         // Check if collection in account wallet
-                        if (!collections.includes(slug) && supported[x].contract === contract && (supported[x].enabled || window.pattern === slug && await checkBeta(slug, address))) {
+                        if (!collections.includes(slug) && supported[x].contract === contract && (supported[x].enabled || await checkBeta(slug, address))) {
                             // Add slug to array
                             collections.push(slug);
                         }
@@ -350,7 +350,6 @@ function toggleOverlay(heading, blurb) {
         // Body
         const body = overlay.querySelector('#overlay-body');
         body.innerHTML = ''; // Clear
-        body.style.minHeight = ''; // Reset
         body.setAttribute('class', ''); // Remove all classes
         window.overlayDate = Date.now();
 
@@ -366,64 +365,51 @@ async function loadOverlayCollections() {
     const overlayBody = document.querySelector('#overlay-body');
     overlayBody.classList.add('overlay-collections');
     const collections = await getSupportedCollections();
-    var enabled = [];
-
-    // Only list enabled collections
-    for (let x = 0; x < collections.length; x++) {
-        if (collections[x].enabled) {
-            enabled.push(collections[x]);
-        }
-    }
-
-    overlayBody.style.minHeight = window.innerWidth > 768 ? Math.ceil(enabled.length / 2) * 68 + 'px' : enabled.length * 68 + 'px'; // DT is 2 columns
     const accountCollections = await getAccountCollections(await getWalletAddress());
 
     if (date === window.overlayDate) {
-        for (let x = 0; x < enabled.length; x++) {
-            let slug = enabled[x].slug;
-            let collectionLink = document.createElement('a');
-            collectionLink.innerHTML = `<img src="" alt="" class="collection-icon" />${ enabled[x].name }`;
-            collectionLink.classList.add((x + 1) % 2 === 0 ? 'overlay-collection-right' : 'overlay-collection-left'); // Left or right column on DT
+        var count = 0;
 
-            // Is NFT owned?
-            const owned = accountCollections.includes(slug) ? true : false;
-            collectionLink.classList.add(!owned ? 'fade-in-025-015' : 'fade-in-1-015'); // Fade non-owned collections to 0.25
+        for (let x = 0; x < collections.length; x++) {
+            let slug = collections[x].slug;
 
-            if (!owned) {
-                // Does not own NFT
-                collectionLink.setAttribute('title', 'Buy on OpenSea');
-            } else if (window.pattern === slug) {
-                // Already selected collection
-                collectionLink.classList.add('selected');
-            }
+            if (accountCollections.includes(slug)) {
+                let collectionLink = document.createElement('a');
+                collectionLink.innerHTML = `<img src="" alt="" class="collection-icon" />${ collections[x].name }`;
+                collectionLink.classList.add((count + 1) % 2 === 0 ? 'overlay-collection-right' : 'overlay-collection-left'); // Left or right column on DT
+                count++;
+                collectionLink.classList.add('fade-in-1-025');
 
-            overlayBody.appendChild(collectionLink); // Append collection to overlay body
-            loadCollectionThumb(collectionLink, slug);
+                if (window.pattern === slug) {
+                    // Already selected collection
+                    collectionLink.classList.add('selected');
+                }
 
-            // Click
-            collectionLink.addEventListener('click', (e) => {
-                if (!owned) {
-                    window.open('https://opensea.io/collection/' + slug, '_blank'); // Go to OpenSea
-                } else {
+                let collection = await getOSCollection(slug); // Get thumbnail
+
+                if (collectionLink) {
+                    let image = collectionLink.querySelector('img');
+                    image.setAttribute('src', collection.image_url);
+
+                    image.addEventListener('load', () => {
+                        if (image) {
+                            overlayBody.appendChild(collectionLink); // Append collection to overlay body
+                        }
+                    });
+                }
+
+                // Click
+                collectionLink.addEventListener('click', (e) => {
                     history.pushState(null, null, slug); // Redirect to collection
                     toggleOverlay(); // Close
-                }
-            });
-        }
-    }
-}
-
-async function loadCollectionThumb(collectionLink, slug) {
-    const collection = await getOSCollection(slug);
-
-    if (collectionLink) {
-        const image = collectionLink.querySelector('img');
-        image.setAttribute('src', collection.image_url);
-
-        image.addEventListener('load', () => {
-            if (image) {
-                image.style.visibility = 'visible'; // Show
+                });
             }
-        });
+        }
+
+        if (!count) {
+            // No supported collections found
+            overlayBody.classList.add('empty');
+            overlayBody.innerHTML = '<p class="fade-in-1-025">No supported collections found in your wallet.</p>';
+        }
     }
 }

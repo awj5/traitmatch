@@ -27,10 +27,10 @@ async function getHighScoreID(slug, wallet) {
 
 const addScore = async (request, response) => {
     try {
-        const { slug, wallet, score } = request.body
+        const { slug, wallet, score, token } = request.body
 
         // Add user new score
-        const insert = await pool.query('INSERT INTO scores (collection, wallet, score) VALUES ($1, $2, $3) RETURNING id', [slug, wallet, score])
+        const insert = await pool.query('INSERT INTO scores (collection, wallet, score, token) VALUES ($1, $2, $3, $4) RETURNING id', [slug, wallet, score, token])
         const highScoreID = await getHighScoreID(slug, wallet)
 
         if (highScoreID) {

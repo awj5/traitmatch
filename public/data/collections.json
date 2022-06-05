@@ -1,15 +1,15 @@
 [
   {
-    "slug": "cryptorayrays-collection",
-    "name": "CryptoRayRays",
-    "enabled": false,
-    "contract": "0x8d4e2435c262eb6df10e5e4672a8f07e42d8d67e"
-  },
-  {
     "slug": "dourdarcels",
     "name": "Dour Darcels",
     "enabled": false,
     "contract": "0x8d609bd201beaea7dccbfbd9c22851e23da68691"
+  },
+  {
+    "slug": "cryptorayrays-collection",
+    "name": "CryptoRayRays",
+    "enabled": false,
+    "contract": "0x8d4e2435c262eb6df10e5e4672a8f07e42d8d67e"
   },
   {
     "slug": "foxfam",

@@ -224,7 +224,7 @@ async function resetItem(num) {
     item.removeAttribute('data-item');
     item.style.pointerEvents = '';
     item.setAttribute('class', '');
-    item.querySelector('p').classList.remove('fade-in-1-015');
+    item.querySelector('p').classList.remove('fade-in-1-025');
     const image = item.querySelector('img');
     image.setAttribute('class', '');
     image.setAttribute('src', '/assets/img/placeholder.png');
@@ -477,7 +477,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
     }
 
     prevItem.style.pointerEvents = '';
-    results.classList.add('fade-in-1-015'); // Show results
+    results.classList.add('fade-in-1-025'); // Show results
     window.streak = true;
 
     // Remove prev
@@ -508,7 +508,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 restart(false);
             }
         }
-    }, 3150);
+    }, 3250);
 
     async function getHighScore(score) {
         try {
@@ -530,7 +530,8 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
         const obj = {
             slug: window.pattern,
             wallet: await getWalletAddress(),
-            score: score
+            score: score,
+            token: window.collectionTokens[0]
         };
 
         postData('/api/scores', obj); // Insert
@@ -625,7 +626,7 @@ function animateScoreIcon(type, results, date) {
                 }
             }, Math.floor((Math.random() * 900) + 100));
         }
-    }, 150); // Wait for result to fade in
+    }, 250); // Wait for result to fade in
 }
 
 function updateScore(type) {
@@ -717,7 +718,7 @@ function showTraitHintsHover(item, num) {
         }
 
         hover.querySelector('p').innerHTML = !localStorage.tmTraitHints || localStorage.tmTraitHints === 'true' ? traitsList : '';
-        hover.classList.add('fade-in-1-015');
+        hover.classList.add('fade-in-1-025');
         hover.style.display = 'flex'; // Show
     }
 }

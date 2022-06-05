@@ -1,6 +1,7 @@
 /* Import */
 
 @import url("collection.css");
+@import url("leaderboards.css");
 
 /* Fonts */
 
@@ -76,12 +77,8 @@ a:active svg {
 
 /* Animation */
 
-.fade-in-1-015 {
-    animation: fadeIn1 ease-in .15s forwards;
-}
-
-.fade-in-025-015 {
-    animation: fadeIn025 ease-in .15s forwards;
+.fade-in-1-025 {
+    animation: fadeIn1 ease-in .25s forwards;
 }
 
 .scale-up-1-025 {
@@ -95,16 +92,6 @@ a:active svg {
 
     100% {
         opacity: 1;
-    }
-}
-
-@keyframes fadeIn025 {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 0.25;
     }
 }
 
@@ -140,12 +127,25 @@ section {
     margin-top: 52px;
 }
 
-/* Temp placeholder */
-section h2 {
+section#section-home h2 {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+.section-wrapper {
+    max-width: 1024px;
+    padding: 16px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+
+.section-wrapper h2 {
+    margin-top: 24px;
+    font-size: 36px;
 }
 
 /* Header */
@@ -249,7 +249,7 @@ a#nav-item-collection.supported img {
 a#nav-item-connect {
     opacity: 0.25;
     pointer-events: none;
-    transition: opacity 0.15s ease-in-out;
+    transition: opacity 0.25s ease-in-out;
 }
 
 a#nav-item-connect.active {
@@ -334,7 +334,7 @@ a#nav-dark-mode svg {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     opacity: 0;
-    transition: opacity 0.15s ease-in;
+    transition: opacity 0.25s ease-in;
     z-index: 2;
 }
 
@@ -393,14 +393,27 @@ a#overlay-close svg {
 }
 
 @media only screen and (max-width: 768px) {
+    #overlay-wrapper {
+        padding: 12px;
+    }
+
     #overlay-window {
-        width: auto;
-        min-width: 272px;
-        max-width: 480px;
+        width: 296px;
+    }
+
+    a#overlay-close {
+        right: 14px;
     }
 }
 
 /* Overlay collections */
+
+.overlay-collections.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 136px;
+}
 
 .overlay-collections a {
     float: left;
@@ -411,8 +424,6 @@ a#overlay-close svg {
     padding: 6px;
     box-sizing: border-box;
     cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.15s ease-in;
 }
 
 .no-touch .overlay-collections a:hover,
@@ -449,8 +460,11 @@ a.overlay-collection-right {
     margin-left: 16px;
 }
 
-.overlay-collections a img {
-    visibility: hidden;
+#overlay-window .overlay-collections p {
+    margin-top: 0;
+    color: #FF0000;
+    font-size: 16px;
+    text-align: center;
 }
 
 @media only screen and (max-width: 768px) {
