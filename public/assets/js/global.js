@@ -270,7 +270,7 @@ async function getAccountCollections(address) {
                         let slug = supported[x].slug;
 
                         // Check if collection in account wallet
-                        if (!collections.includes(slug) && supported[x].contract === contract && (supported[x].enabled || await checkBeta(slug, address))) {
+                        if (!collections.includes(slug) && supported[x].contract === contract && (supported[x].enabled || supported[x].beta && await checkBeta(slug, address))) {
                             // Add slug to array
                             collections.push(slug);
                         }

@@ -1,5 +1,11 @@
 /* Collection */
 
+section#section-collection {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 52px);
+}
+
 #collection-game {
     height: 100%;
     min-height: 576px;

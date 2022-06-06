@@ -1,1 +1,40 @@
 /* Leaderboards */
+
+#leaderboards-filters {
+    width: 50%;
+    float: right;
+    text-align: right;
+}
+
+#leaderboards-filters label {
+    line-height: 1;
+    margin-bottom: 8px;
+    margin-top: 16px;
+    display: block;
+}
+
+#leaderboards-filters select {
+    width: 240px;
+}
+
+#leaderboards-list {
+    width: 50%;
+    margin-top: 16px;
+    float: left;
+}
+
+@media only screen and (max-width: 768px) {
+    #leaderboards-filters,
+    #leaderboards-list {
+        width: 100%;
+        float: none;
+    }
+
+    #leaderboards-filters {
+        text-align: left;
+    }
+
+    #leaderboards-filters select {
+        width: 100%;
+    }
+}

@@ -1,0 +1,14 @@
+/* Home */
+
+section#section-home {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 52px);
+}
+
+section#section-home h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

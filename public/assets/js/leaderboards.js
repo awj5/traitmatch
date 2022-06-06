@@ -5,27 +5,41 @@
 /* On DOM load */
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('select#leaderboards-collections').addEventListener('change', (e) => {
+        loadLeaderboard();
+    });
 
+    document.querySelector('select#leaderboards-range').addEventListener('change', (e) => {
+        loadLeaderboard();
+    });
 });
 
 /* Leaderboards */
 
 async function leaderboards() {
-    var collections = [];
+    const collections = document.querySelector('select#leaderboards-collections');
+    collections.innerHTML = ''; // Clear
     const collectionsData = await getSupportedCollections();
 
-    // Only enabled collections
     for (let x = 0; x < collectionsData.length; x++) {
-        if (collectionsData[x].enabled || location.hostname === 'localhost') {
-            collections.push(collectionsData[x]);
+        if (collectionsData[x].leaderboard) {
+            let option = document.createElement('option');
+            option.text = collectionsData[x].name;
+            option.value = collectionsData[x].slug;
+            collections.add(option);
         }
     }
 
-    //document.querySelector('section#section-leaderboards h3').textContent = collections[0].name;
+    // Pre-select collection if currently playing
+    if (window.collection && collections.querySelector(`option[value=${ window.collection }]`)) {
+        collections.value = window.collection;
+    }
 
-    //console.log(collections[0])
-    /* if (window.collection) {
-        console.log(window.collection)
-        getOSCollection(slug)
-    } */
+    document.querySelector('select#leaderboards-range').value = 0; // Reset
+    loadLeaderboard();
+}
+
+function loadLeaderboard() {
+    console.log(document.querySelector('select#leaderboards-collections').value);
+    console.log(document.querySelector('select#leaderboards-range').value);
 }
