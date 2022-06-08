@@ -42,7 +42,8 @@ router.get('/*', function (req, res, next) {
 /* Endpoints */
 
 app.post('/api/scores', DB.addScore)
-app.get('/api/scores/:slug/:wallet', DB.getUserScores)
+app.get('/api/score/:slug/:wallet', DB.getUserScore)
+app.get('/api/scores/:slug/:range', DB.getCollectionScores)
 app.get('/api/nft/:contract/:token', Alchemy.getNFT)
 app.get('/api/contracts/:wallet/:page?', Alchemy.getContracts)
 app.get('/api/nfts/:wallet/:collection', Alchemy.getContractNFTs)

@@ -92,6 +92,7 @@ select {
     background-size: 20px 12px;
     background-position: center right 10px;
     color: #111;
+    border-radius: 0;
 }
 
 .dark-mode select {
@@ -449,16 +450,6 @@ a#overlay-close svg {
 
 .dark-mode .overlay-collections a {
     border-color: #EEE;
-}
-
-.overlay-collections a.fade-in-025-025 {
-    color: #111;
-    border-color: #111 !important;
-}
-
-.dark-mode .overlay-collections a.fade-in-025-025 {
-    color: #EEE;
-    border-color: #EEE !important;
 }
 
 .overlay-collections a.selected {

@@ -260,7 +260,7 @@ async function loadItem(num, item, date, swapped) {
         const boardItem = document.querySelector('a#board-item-' + num);
         boardItem.setAttribute('data-item', item);
         const image = boardItem.querySelector('img');
-        image.setAttribute('src', `https://traitmatch.s3.us-west-1.amazonaws.com/dourdarcels/${ item }.png`); // Update image
+        image.setAttribute('src', `https://traitmatch.s3.us-west-1.amazonaws.com/${ window.pattern }/${ item }.png`); // Update image
         const traits = asset.metadata.attributes;
         window[`item${ num }Traits`] = traits; // Set item traits
 
@@ -512,11 +512,11 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
     async function getHighScore(score) {
         try {
-            const scores = await getData(`/api/scores/${ window.pattern }/${ await getWalletAddress() }`);
+            const highScore = await getData(`/api/score/${ window.pattern }/${ await getWalletAddress() }`);
 
             // Is latest score the highest?
-            if (scores.length && scores[0].score > score) {
-                score = scores[0].score;
+            if (highScore.length && highScore[0].score > score) {
+                score = highScore[0].score;
             }
 
             return score;
