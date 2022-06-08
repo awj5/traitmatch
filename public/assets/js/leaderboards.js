@@ -40,7 +40,10 @@ async function leaderboards() {
     }
 
     document.querySelector('select#leaderboards-range').value = 0; // Reset
-    loadLeaderboard(); // Init
+
+    if (!window.leaderboardsLoadDate) {
+        loadLeaderboard(); // Init
+    }
 }
 
 async function loadLeaderboard() {
