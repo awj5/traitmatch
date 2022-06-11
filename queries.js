@@ -14,8 +14,8 @@ const pool = new PG.Pool({
 
 /* Queries */
 
-async function getHighScore(slug, wallet) {
-    const select = await pool.query('SELECT * FROM scores WHERE collection = $1 AND wallet = $2 ORDER BY score DESC', [slug, wallet])
+async function getHighScore(slug, wallet, range) {
+    const select = await pool.query('SELECT * FROM scores WHERE collection = $1 AND wallet = $2 AND $3 = 0 OR collection = $1 AND wallet = $2 AND date > now() - interval \'1 day\' * $3 ORDER BY score DESC', [slug, wallet, range])
     return select.rows
 }
 
@@ -25,7 +25,7 @@ const addScore = async (request, response) => {
 
         // Add user new score
         const insert = await pool.query('INSERT INTO scores (collection, wallet, score, token) VALUES ($1, $2, $3, $4) RETURNING id', [slug, wallet, score, token])
-        const highScore = await getHighScore(slug, wallet)
+        const highScore = await getHighScore(slug, wallet, 0)
 
         if (highScore.length) {
             // Clear scores older than 1 month and not high score
@@ -48,7 +48,7 @@ const addScore = async (request, response) => {
 
 const getUserScore = async (request, response) => {
     try {
-        const highScore = await getHighScore(request.params.slug, request.params.wallet)
+        const highScore = await getHighScore(request.params.slug, request.params.wallet, request.params.range ? request.params.range : 0)
         response.status(200).json(highScore)
     } catch (error) {
         console.log(error)

@@ -50,9 +50,10 @@ async function loadLeaderboard() {
     const list = document.querySelector('#leaderboards-collection-list');
     list.innerHTML = ''; // Clear
     const collections = document.querySelector('select#leaderboards-collections');
+    const range = document.querySelector('select#leaderboards-range').value;
     const slug = collections.value;
     const collection = await getOSCollection(slug); // Get thumbnail
-    const scores = await getData(`/api/scores/${ slug }/${ document.querySelector('select#leaderboards-range').value }`);
+    const scores = await getData(`/api/scores/${ slug }/${ range }`);
     const walletAddress = await getWalletAddress();
 
     if (window.leaderboardsLoadDate === date) {
@@ -70,7 +71,7 @@ async function loadLeaderboard() {
         // High score
         if (walletAddress) {
             const highScore = document.querySelector('p#leaderboards-collection-hs');
-            const highScoreData = await getData(`/api/score/${ slug }/${ walletAddress }`);
+            const highScoreData = await getData(`/api/score/${ slug }/${ walletAddress }/${ range }`);
 
             if (highScoreData.length) {
                 // Show
