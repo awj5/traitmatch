@@ -260,7 +260,7 @@ async function loadItem(num, item, date, swapped) {
         const boardItem = document.querySelector('a#board-item-' + num);
         boardItem.setAttribute('data-item', item);
         const image = boardItem.querySelector('img');
-        image.setAttribute('src', `https://traitmatch.s3.us-west-1.amazonaws.com/${ window.pattern }/${ item }.png`); // Update image
+        image.setAttribute('src', `https://traitmatch.s3.us-west-1.amazonaws.com/${ window.collection }/${ item }.png`); // Update image
         const traits = asset.metadata.attributes;
         window[`item${ num }Traits`] = traits; // Set item traits
 
@@ -329,16 +329,16 @@ function swapItem(num, item, date) {
 
 function restart(confirm) {
     if (!confirm || document.querySelector('#collection-game').style.visibility === 'visible' && window.confirm('Are you sure you want to restart your game?')) {
-        localStorage.removeItem('tmItems' + window.pattern);
+        localStorage.removeItem('tmItems' + window.collection);
         window.scoreTotal = 0;
         window.scoreMatches = 0;
         window.scoreRarity = 0;
         window.scoreStreak = 0;
-        localStorage['tmScoreTotal' + window.pattern] = window.scoreTotal;
-        localStorage['tmScoreMatches' + window.pattern] = window.scoreMatches;
-        localStorage['tmScoreRarity' + window.pattern] = window.scoreRarity;
-        localStorage['tmScoreStreak' + window.pattern] = window.scoreStreak;
-        setItems(window.pattern); // Get new selection
+        localStorage['tmScoreTotal' + window.collection] = window.scoreTotal;
+        localStorage['tmScoreMatches' + window.collection] = window.scoreMatches;
+        localStorage['tmScoreRarity' + window.collection] = window.scoreRarity;
+        localStorage['tmScoreStreak' + window.collection] = window.scoreStreak;
+        setItems(window.collection); // Get new selection
         shuffle(true);
     }
 }
@@ -451,7 +451,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
     window.items.splice(index, 1); // Remove
     index = window.boardItems.indexOf(item);
     window.boardItems.splice(index, 1); // Remove
-    localStorage['tmItems' + window.pattern] = JSON.stringify(window.items); // Update local storage
+    localStorage['tmItems' + window.collection] = JSON.stringify(window.items); // Update local storage
     updateCounter();
 
     const results = prevItem.querySelector('p');
@@ -488,8 +488,8 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
             // Check if game over
             if (!window.items.length) {
-                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.pattern] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.pattern]) }</span>`);
-                recordScore(localStorage['tmScoreTotal' + window.pattern]);
+                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.collection] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span>`);
+                recordScore(localStorage['tmScoreTotal' + window.collection]);
                 restart(false);
             } else if (window.items.length === 1) {
                 // Clear last item automatically
@@ -503,8 +503,8 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 localStorage['tmOB3'] = true;
             } else if (window.boardItems.length < 20 && !checkMatches()) {
                 // No more matches possible
-                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.pattern] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.pattern]) }</span>`);
-                recordScore(localStorage['tmScoreTotal' + window.pattern]);
+                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.collection] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span>`);
+                recordScore(localStorage['tmScoreTotal' + window.collection]);
                 restart(false);
             }
         }
@@ -512,7 +512,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
     async function getHighScore(score) {
         try {
-            const highScore = await getData(`/api/score/${ window.pattern }/${ await getWalletAddress() }`);
+            const highScore = await getData(`/api/score/${ window.collection }/${ await getWalletAddress() }`);
 
             // Is latest score the highest?
             if (highScore.length && highScore[0].score > score) {
@@ -528,7 +528,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
     async function recordScore(score) {
         const obj = {
-            slug: window.pattern,
+            slug: window.collection,
             wallet: await getWalletAddress(),
             score: score,
             token: window.collectionTokens[0]
@@ -643,7 +643,7 @@ function updateScore(type) {
 
 function scoreAdd(type) {
     window['score' + type]++;
-    localStorage['tmScore' + type + window.pattern] = JSON.stringify(window['score' + type]); // Save to local storage
+    localStorage['tmScore' + type + window.collection] = JSON.stringify(window['score' + type]); // Save to local storage
 
     // Add to grand total
     if (type !== 'Total') {

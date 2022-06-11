@@ -21,16 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function leaderboards() {
     const collections = document.querySelector('select#leaderboards-collections');
-    collections.innerHTML = ''; // Clear
-    const collectionsData = await getSupportedCollections();
-
-    // Set collections dropdown
-    for (let x = 0; x < collectionsData.length; x++) {
-        if (collectionsData[x].leaderboard) {
-            let option = document.createElement('option');
-            option.text = collectionsData[x].name;
-            option.value = collectionsData[x].slug;
-            collections.add(option);
+    
+    // Set collections dropdown (once only)
+    if (!collections.querySelectorAll('option').length) {
+        const collectionsData = await getSupportedCollections();
+        
+        for (let x = 0; x < collectionsData.length; x++) {
+            if (collectionsData[x].leaderboard) {
+                let option = document.createElement('option');
+                option.text = collectionsData[x].name;
+                option.value = collectionsData[x].slug;
+                document.querySelector('select#leaderboards-collections').add(option);
+            }
         }
     }
 
@@ -39,17 +41,13 @@ async function leaderboards() {
         collections.value = window.collection;
     }
 
-    document.querySelector('select#leaderboards-range').value = 0; // Reset
-
-    if (!window.leaderboardsLoadDate) {
-        loadLeaderboard(); // Init
-    }
+    loadLeaderboard(); // Init
 }
 
 async function loadLeaderboard() {
     const date = Date.now();
     window.leaderboardsLoadDate = date;
-    const list = document.querySelector('#leaderboards-list');
+    const list = document.querySelector('#leaderboards-collection-list');
     list.innerHTML = ''; // Clear
     const collections = document.querySelector('select#leaderboards-collections');
     const slug = collections.value;
@@ -58,18 +56,33 @@ async function loadLeaderboard() {
     const walletAddress = await getWalletAddress();
 
     if (window.leaderboardsLoadDate === date) {
+        // Heading
         const name = collections.selectedOptions[0].text;
-        list.innerHTML = `<h3><img src="${ collection.image_url }" alt="${ name }" />${ name }</h3>`;
+        const heading = document.querySelector('#leaderboards-collection h3');
+        const image = heading.querySelector('img');
+        
+        if (name !== heading.textContent) {
+            image.src = collection.image_url;
+            image.alt = name;
+            heading.querySelector('span').textContent = name;
+        }
 
+        // High score
         if (walletAddress) {
-            // Show user high score
-            const highScore = await getData(`/api/score/${ slug }/${ walletAddress }`);
+            const highScore = document.querySelector('p#leaderboards-collection-hs');
+            const highScoreData = await getData(`/api/score/${ slug }/${ walletAddress }`);
 
-            if (highScore.length) {
-                list.innerHTML += `<p id="leaderboards-high-score" class="fade-in-1-025">Your high score:<span>${ highScore[0].score }</span></p>`;
+            if (highScoreData.length) {
+                // Show
+                highScore.querySelector('span').textContent = highScoreData[0].score;
+                highScore.style.display = 'block';
+            } else {
+                // Hide
+                highScore.style.display = '';
             }
         }
 
+        // Top scores
         for (let x = 0; x < scores.length; x++) {
             setTimeout(() => {
                 if (window.leaderboardsLoadDate === date) {

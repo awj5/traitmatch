@@ -20,18 +20,18 @@
     margin-bottom: 16px;
 }
 
-#leaderboards-list {
+#leaderboards-collection {
     width: 50%;
     margin-top: 24px;
     float: left;
 }
 
-#leaderboards-list h3 {
+#leaderboards-collection h3 {
     line-height: 1;
     font-size: 30px;
 }
 
-#leaderboards-list h3 img {
+#leaderboards-collection h3 img {
     width: 48px;
     height: 48px;
     border-radius: 999px;
@@ -39,29 +39,34 @@
     margin-right: 12px;
 }
 
-#leaderboards-list p {
+#leaderboards-collection p {
     margin-top: 16px;
     font-size: 18px;
     color: #999;
     line-height: 1;
 }
 
-p#leaderboards-high-score {
+p#leaderboards-collection-hs {
     border: 4px solid #FFD700;
     color: #111;
     padding: 12px;
+    display: none;
 }
 
-.dark-mode p#leaderboards-high-score {
+.dark-mode p#leaderboards-collection-hs {
     color: #EEE;
 }
 
-#leaderboards-list p span {
+p#leaderboards-collection-hs span {
+    float: right;
+}
+
+#leaderboards-collection-list span {
     font-size: 24px;
     color: #111;
 }
 
-.dark-mode #leaderboards-list p span {
+.dark-mode #leaderboards-collection-list span {
     color: #EEE;
 }
 
@@ -72,16 +77,11 @@ span.leaderboards-list-score {
     align-items: center;
 }
 
-#leaderboards-list p span.leaderboards-list-you {
+#leaderboards-collection-list span.leaderboards-list-you {
     color: #87CEEB;
 }
 
-p#leaderboards-high-score span {
-    float: right;
-    font-size: 18px;
-}
-
-#leaderboards-list p img {
+#leaderboards-collection-list img {
     width: 40px;
     height: 40px;
     border-radius: 999px;
@@ -91,13 +91,13 @@ p#leaderboards-high-score span {
     background-color: #CCC;
 }
 
-.dark-mode #leaderboards-list p img {
+.dark-mode #leaderboards-collection-list img {
     background-color: #333;
 }
 
 @media only screen and (max-width: 768px) {
     #leaderboards-filters,
-    #leaderboards-list {
+    #leaderboards-collection {
         width: 100%;
         float: none;
         position: static;

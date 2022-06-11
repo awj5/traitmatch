@@ -13,7 +13,7 @@
     "enabled": false,
     "contract": "0x8d4e2435c262eb6df10e5e4672a8f07e42d8d67e",
     "beta": false,
-    "leaderboard": false
+    "leaderboard": true
   },
   {
     "slug": "foxfam",
