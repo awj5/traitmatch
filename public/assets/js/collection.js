@@ -207,12 +207,15 @@ async function shuffle(manual) {
         }
 
         if (date === window.shuffleDate) {
-            game.style.visibility = 'visible'; // Show
+            if (window.collection === window.pattern) {
+                game.style.visibility = 'visible'; // Show
+            }
+            
             setItem(1, date, true); // Set first item
         }
 
         // Instructions
-        if (!localStorage['tmOB1']) {
+        if (game.style.visibility === 'visible' && !localStorage['tmOB1']) {
             toggleOverlay('Welcome', 'Hello fren 👋, it looks like you\'re new here. Get started by selecting any NFT from the board.');
             localStorage['tmOB1'] = true;
         }
@@ -285,9 +288,8 @@ async function loadItem(num, item, date, swapped) {
         }
 
         // Instructions
-        if (localStorage['tmOB3'] && !localStorage['tmOB4'] && document.querySelector('#overlay').style.display !== 'flex' && detectWildcards()) {
+        if (document.querySelector('#collection-game').style.visibility === 'visible' && localStorage['tmOB3'] && document.querySelector('#overlay').style.display !== 'flex' && detectWildcards()) {
             toggleOverlay('Wildcard Detected!', 'NFTs you own and also ones with rare 1/1 traits are wildcards that can be matched with any item to receive a special bonus. Wildcards have a <span style="color: #FFFF00;">yellow</span> border when selected.');
-            localStorage['tmOB4'] = true;
         }
 
         if (num === 20 || num === window.items.length) {
@@ -491,13 +493,14 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.collection] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span>`);
                 recordScore(localStorage['tmScoreTotal' + window.collection]);
                 restart(false);
+                confetti();
             } else if (window.items.length === 1) {
                 // Clear last item automatically
                 const lastItem = document.querySelector(`a[data-item="${ window.boardItems[0] }"]`);
                 const lastItemNum = lastItem.getAttribute('id').replace('board-item-', '');
                 window.selectedItem = lastItemNum;
                 matchTraits(lastItemNum);
-            } else if (!localStorage['tmOB3']) {
+            } else if (document.querySelector('#collection-game').style.visibility === 'visible' && !localStorage['tmOB3']) {
                 // Instructions
                 toggleOverlay('Boom 💥', 'You did it! Now clear another and get a streak going. Your goal is to clear the board and get the highest score. LFG!<br /><br /><span style="color: #FF0000;">Beware:</span> You\'ll get a bonus for maintaining a streak but if you shuffle the board or select NFTs with no matching traits your streak bonus will reset to zero.');
                 localStorage['tmOB3'] = true;
@@ -652,10 +655,9 @@ function scoreAdd(type) {
 }
 
 function streakBroken() {
-    if (document.querySelector('#collection-game').style.visibility === 'visible' && !localStorage['tmOB5'] && window.scoreStreak !== 0) {
+    if (document.querySelector('#collection-game').style.visibility === 'visible' && window.scoreStreak !== 0) {
         // Instructions
-        toggleOverlay('Uh-oh!', 'You lost your streak bonus 💔 If you shuffle the board or select NFTs with no matching traits your streak bonus will reset to zero.');
-        localStorage['tmOB5'] = true;
+        toggleOverlay('Uh-oh!', 'You lost your streak bonus 💔 If you shuffle the board, select NFTs with no matching traits or leave the game your streak bonus will reset to zero.');
     }
 
     const date = window.shuffleDate;
