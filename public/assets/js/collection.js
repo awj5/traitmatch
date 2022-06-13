@@ -8,7 +8,7 @@ window.collectionTotalCount;
 window.collectionTraits = [];
 window.shuffleDate;
 window.items = [];
-window.gameItemCount = 100;
+window.gameItemCount;
 window.boardItems = [];
 window.selectedItem;
 window.deselectedItem;
@@ -115,11 +115,13 @@ async function loadCollection() {
     if (window.collection !== window.pattern) {
         window.collection = window.pattern;
         const collectionData = await getOSCollection(window.collection);
+        const collections = await getSupportedCollections();
 
         if (window.collection === window.pattern) {
             window.contract = collectionData.primary_asset_contracts[0].address;
             window.collectionTotalCount = collectionData.stats.count; // Total items
             window.collectionTraits = collectionData.traits;
+            window.gameItemCount = collections.filter(obj => obj.slug === window.collection)[0].items;
             setItems(window.collection);
             window.scoreTotal = localStorage['tmScoreTotal' + window.collection] ? localStorage['tmScoreTotal' + window.collection] : 0;
             window.scoreMatches = localStorage['tmScoreMatches' + window.collection] ? localStorage['tmScoreMatches' + window.collection] : 0;
@@ -502,7 +504,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 matchTraits(lastItemNum);
             } else if (document.querySelector('#collection-game').style.visibility === 'visible' && !localStorage['tmOB3']) {
                 // Instructions
-                toggleOverlay('Boom 💥', 'You did it! Now clear another and get a streak going. Your goal is to clear the board and get the highest score. LFG!<br /><br /><span style="color: #FF0000;">Beware:</span> You\'ll get a bonus for maintaining a streak but if you shuffle the board or select NFTs with no matching traits your streak bonus will reset to zero.');
+                toggleOverlay('Boom 💥', 'You did it! Now clear another and get a streak going. Your goal is to clear the board and get the highest score. LFG!<br /><br /><span style="color: #FF0000;">Beware:</span> You\'ll get a bonus for maintaining a streak but if you shuffle the board, select NFTs with no matching traits or leave the game your streak bonus will reset to zero.');
                 localStorage['tmOB3'] = true;
             } else if (window.boardItems.length < 20 && !checkMatches()) {
                 // No more matches possible
