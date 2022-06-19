@@ -2,6 +2,7 @@
 
 @import url("home.css");
 @import url("collection.css");
+@import url("how.css");
 @import url("leaderboards.css");
 
 /* Fonts */
@@ -399,10 +400,6 @@ a#overlay-close svg {
 
 #overlay-window h2 {
     width: calc(100% - 32px);
-}
-
-#overlay-window p {
-    margin-top: 4px;
 }
 
 #overlay-window p a {

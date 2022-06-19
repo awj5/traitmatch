@@ -1,0 +1,38 @@
+/* How to play */
+
+section#section-how h3 {
+    margin-top: 24px;
+}
+
+.how-text {
+    float: left;
+    width: calc(50% - 24px);
+}
+
+.how-text h4 {
+    font-size: 18px;
+    color: #999;
+    margin-top: 20px;
+}
+
+.how-text a {
+    text-decoration: underline;
+}
+
+section#section-how iframe {
+    width: 50%;
+    float: right;
+    margin-top: 24px;
+}
+
+@media only screen and (max-width: 768px) {
+    .how-text {
+        width: auto;
+        float: none;
+    }
+    
+    section#section-how iframe {
+        width: 100%;
+        float: none;
+    }
+}

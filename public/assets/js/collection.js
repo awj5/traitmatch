@@ -657,7 +657,7 @@ function scoreAdd(type) {
 }
 
 function streakBroken() {
-    if (document.querySelector('#collection-game').style.visibility === 'visible' && window.scoreStreak !== 0) {
+    if (document.querySelector('#collection-game').style.visibility === 'visible' && document.querySelector('#overlay').style.display !== 'flex' && window.scoreStreak !== 0) {
         // Instructions
         toggleOverlay('Uh-oh!', 'You lost your streak bonus 💔 If you shuffle the board, select NFTs with no matching traits or leave the game your streak bonus will reset to zero.');
     }
