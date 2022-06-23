@@ -364,8 +364,10 @@ async function loadOverlayCollections() {
     const date = window.overlayDate;
     const overlayBody = document.querySelector('#overlay-body');
     overlayBody.classList.add('overlay-collections');
+    overlayBody.innerHTML = '<div class="loading-icon"></div>'; // Add loader
     const collections = await getSupportedCollections();
     const accountCollections = await getAccountCollections(await getWalletAddress());
+    overlayBody.innerHTML = ''; // Remove loader
 
     if (date === window.overlayDate) {
         var count = 0;
