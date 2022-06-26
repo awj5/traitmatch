@@ -2,11 +2,16 @@
 
 section#section-how h3 {
     margin-top: 24px;
+    color: #87CEEB;
 }
 
 .how-text {
     float: left;
-    width: calc(50% - 24px);
+    width: calc(50% - 12px);
+}
+
+.how-text-right {
+    float: right;
 }
 
 .how-text h4 {
@@ -19,10 +24,15 @@ section#section-how h3 {
     text-decoration: underline;
 }
 
-section#section-how iframe {
-    width: 50%;
+section#section-how iframe,
+section#section-how img {
+    width: calc(50% - 12px);
     float: right;
     margin-top: 24px;
+}
+
+section#section-how img.how-image-left {
+    float: left;
 }
 
 @media only screen and (max-width: 768px) {
@@ -31,7 +41,8 @@ section#section-how iframe {
         float: none;
     }
     
-    section#section-how iframe {
+    section#section-how iframe,
+    section#section-how img {
         width: 100%;
         float: none;
     }
