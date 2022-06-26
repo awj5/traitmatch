@@ -77,6 +77,10 @@ section#section-collection {
     line-height: 2;
 }
 
+#game-board a p .loading-icon {
+    animation: rotating linear .5s infinite;
+}
+
 #game-board a span {
     display: block;
 }

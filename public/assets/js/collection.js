@@ -229,7 +229,9 @@ async function resetItem(num) {
     item.removeAttribute('data-item');
     item.style.pointerEvents = '';
     item.setAttribute('class', '');
-    item.querySelector('p').classList.remove('fade-in-1-025');
+    const results = item.querySelector('p');
+    results.innerHTML = ''; // Clear
+    results.style.backgroundColor = 'transparent';
     const image = item.querySelector('img');
     image.setAttribute('class', '');
     image.setAttribute('src', '/assets/img/placeholder.png');
@@ -258,11 +260,13 @@ function setItem(num, date, shuffle, swapped) {
 }
 
 async function loadItem(num, item, date, swapped) {
+    const boardItem = document.querySelector('a#board-item-' + num);
+    const results = boardItem.querySelector('p');
+    results.innerHTML = '<div class="loading-icon"></div>'; // Add loader
     const asset = await getData(`/api/nft/${ window.contract }/${ item }`);
     //console.log(asset);
 
     if (asset && asset.metadata && date === window.shuffleDate) {
-        const boardItem = document.querySelector('a#board-item-' + num);
         boardItem.setAttribute('data-item', item);
         const image = boardItem.querySelector('img');
         image.setAttribute('src', `https://traitmatch.s3.us-west-1.amazonaws.com/${ window.collection }/${ item }.png`); // Update image
@@ -291,7 +295,7 @@ async function loadItem(num, item, date, swapped) {
 
         // Instructions
         if (document.querySelector('#collection-game').style.visibility === 'visible' && localStorage['tmOB3'] && document.querySelector('#overlay').style.display !== 'flex' && detectWildcards()) {
-            toggleOverlay('Wildcard Detected!', 'NFTs you own and also ones with rare 1/1 traits are wildcards that can be matched with any item to receive a special bonus. Wildcards have a <span style="color: #FFFF00;">yellow</span> border when selected.');
+            toggleOverlay('Wildcard Detected!', 'NFTs you own and also ones with rare 1/1 traits are wildcards that can be matched with any other NFT to receive a special bonus. Wildcards have a <span style="color: #FFFF00;">yellow</span> border when selected.');
         }
 
         if (num === 20 || num === window.items.length) {
@@ -300,6 +304,9 @@ async function loadItem(num, item, date, swapped) {
 
         image.onload = () => {
             if (date === window.shuffleDate) {
+                results.classList.remove('fade-in-1-025');
+                results.style.backgroundColor = ''; // Reset
+                results.innerHTML = ''; // Clear loader
                 image.classList.add('scale-up-1-025'); // Scale in
             }
 

@@ -310,19 +310,29 @@ a#nav-item-connect.active {
     pointer-events: auto;
 }
 
-a#nav-dark-mode {
+a.nav-footer-item {
     position: fixed;
     right: 0;
-    bottom: 0;
+    bottom: 6px;
     padding: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
-a#nav-dark-mode svg {
+a#nav-dark-mode {
+    bottom: 42px;
+}
+
+a#nav-twitter {
+    bottom: 78px;
+}
+
+a.nav-footer-item svg {
     fill: #111;
-    height: 24px;
+    width: 24px;
 }
 
-.dark-mode a#nav-dark-mode svg {
+.dark-mode a.nav-footer-item svg {
     fill: #EEE;
 }
 
@@ -371,7 +381,7 @@ a#nav-dark-mode svg {
         vertical-align: -7px;
     }
 
-    a#nav-dark-mode {
+    a.nav-footer-item {
         position: absolute;
     }
 }
@@ -408,6 +418,7 @@ a#nav-dark-mode svg {
     padding: 16px;
     padding-top: 32px;
     width: 480px;
+    min-height: 239px;
     border: 4px solid #111;
     box-sizing: border-box;
 }
@@ -465,11 +476,12 @@ a#overlay-close svg {
 }
 
 .overlay-collections .loading-icon {
-    margin-top: 16px;
+    margin: auto;
+    margin-top: 60px;
     animation: rotating linear .5s infinite;
 }
 
-.overlay-collections a {
+.overlay-collections a.fade-in-1-025 {
     float: left;
     font-size: 18px;
     width: calc(50% - 8px);
@@ -480,12 +492,12 @@ a#overlay-close svg {
     cursor: pointer;
 }
 
-.no-touch .overlay-collections a:hover,
-.overlay-collections a:active {
+.no-touch .overlay-collections a.fade-in-1-025:hover,
+.overlay-collections a.fade-in-1-025:active {
     border-color: #999;
 }
 
-.dark-mode .overlay-collections a {
+.dark-mode .overlay-collections a.fade-in-1-025 {
     border-color: #EEE;
 }
 
@@ -511,8 +523,12 @@ a.overlay-collection-right {
     text-align: center;
 }
 
+#overlay-window .overlay-collections p a {
+    color: #FF0000;
+}
+
 @media only screen and (max-width: 768px) {
-    .overlay-collections a {
+    .overlay-collections a.fade-in-1-025 {
         width: 100%;
         margin-left: 0 !important;
     }

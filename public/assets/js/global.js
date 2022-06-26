@@ -378,8 +378,6 @@ async function loadOverlayCollections() {
             if (accountCollections.includes(slug)) {
                 let collectionLink = document.createElement('a');
                 collectionLink.innerHTML = `<img src="" alt="" class="collection-icon" />${ collections[x].name }`;
-                collectionLink.classList.add((count + 1) % 2 === 0 ? 'overlay-collection-right' : 'overlay-collection-left'); // Left or right column on DT
-                count++;
                 collectionLink.classList.add('fade-in-1-025');
 
                 if (window.pattern === slug) {
@@ -389,29 +387,29 @@ async function loadOverlayCollections() {
 
                 let collection = await getOSCollection(slug); // Get thumbnail
 
-                if (collectionLink) {
-                    let image = collectionLink.querySelector('img');
-                    image.setAttribute('src', collection.image_url);
-
-                    image.addEventListener('load', () => {
-                        if (image) {
-                            overlayBody.appendChild(collectionLink); // Append collection to overlay body
-                        }
+                if (date === window.overlayDate) {
+                    collectionLink.querySelector('img').setAttribute('src', collection.image_url);
+                    collectionLink.classList.add((count + 1) % 2 === 0 ? 'overlay-collection-right' : 'overlay-collection-left'); // Left or right column on DT
+                    overlayBody.appendChild(collectionLink); // Append collection to overlay body
+                    count++;
+                    
+                    // Click
+                    collectionLink.addEventListener('click', (e) => {
+                        history.pushState(null, null, slug); // Redirect to collection
+                        toggleOverlay(); // Close
                     });
                 }
-
-                // Click
-                collectionLink.addEventListener('click', (e) => {
-                    history.pushState(null, null, slug); // Redirect to collection
-                    toggleOverlay(); // Close
-                });
             }
         }
 
-        if (!count) {
+        if (date === window.overlayDate && !count) {
             // No supported collections found
             overlayBody.classList.add('empty');
-            overlayBody.innerHTML = '<p class="fade-in-1-025">No supported collections found in your wallet.</p>';
+            overlayBody.innerHTML = '<p class="fade-in-1-025">No supported collections found in your wallet. Suggest collections via <a href="https://twitter.com/traitmatch" target="_blank">Twitter</a>.</p>';
         }
     }
+}
+
+function openSupport() {
+    toggleOverlay('Support', 'Please tweet or DM TraitMatch on <a href="https://twitter.com/traitmatch" target="_blank">Twitter</a> if you have any issues or find any bugs.<br /><br />Please also use <a href="https://twitter.com/traitmatch" target="_blank">Twitter</a> to suggest NFT collections that you would like to see TraitMatch support.<br /><br />Traitmatch is developed by <a href="https://twitter.com/adam_wj5" target="_blank">Adam WJ5</a>');
 }
