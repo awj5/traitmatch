@@ -695,7 +695,7 @@ function streakBroken() {
     }
 
     const date = window.shuffleDate;
-    const diff = window.scoreStreak;
+    const diff = parseInt(window.scoreStreak);
     const streakScore = document.querySelector('h3#game-streak span.game-score');
     const totalScore = document.querySelector('h3#game-total span.game-score');
     window.scoreTotal = window.scoreTotal - diff;
@@ -705,7 +705,7 @@ function streakBroken() {
     window.streak = false;
     
     // Animate streak score
-    if (diff > 0) {
+    if (diff) {
         window.streakAnimating = true;
 
         // Deduct from score text over loop
@@ -742,8 +742,8 @@ function updateCounter(shuffled) {
             
             setTimeout(() => {
                 counter.classList.remove('bounce'); // Reset
-            }, 250);
-        }, 250);
+            }, 200);
+        }, 200);
     }
 }
 
