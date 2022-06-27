@@ -230,11 +230,13 @@ async function resetItem(num, shuffled) {
     item.style.pointerEvents = '';
     item.setAttribute('class', '');
     const results = item.querySelector('p');
-    results.innerHTML = ''; // Clear
-    results.style.backgroundColor = 'transparent';
     
     if (shuffled) {
-        results.classList.remove('fade-in-1-025');
+        results.classList.remove('fade-in-1-025'); // Hide
+    } else {
+        // Loading icon ready
+        results.style.backgroundColor = 'transparent';
+        results.innerHTML = ''; // Clear
     }
     
     const image = item.querySelector('img');
@@ -268,12 +270,12 @@ async function loadItem(num, item, date, swapped) {
     const boardItem = document.querySelector('a#board-item-' + num);
     const results = boardItem.querySelector('p');
     
-    // Show loader if image not ready after 1 sec
+    // Show loader if image not ready after 1.5 secs
     setTimeout(() => {
         if (results.classList.contains('fade-in-1-025') && date === window.shuffleDate) {
             results.innerHTML = '<div class="loading-icon"></div>'; // Add loader
         }
-    }, 1000);
+    }, 1500);
     
     const asset = await getData(`/api/nft/${ window.contract }/${ item }`);
     //console.log(asset);
@@ -316,9 +318,9 @@ async function loadItem(num, item, date, swapped) {
 
         image.onload = () => {
             if (date === window.shuffleDate) {
-                results.classList.remove('fade-in-1-025');
+                results.classList.remove('fade-in-1-025'); // Hide
                 results.style.backgroundColor = ''; // Reset
-                results.innerHTML = ''; // Clear loader
+                results.innerHTML = ''; // Clear
                 image.classList.add('scale-up-1-025'); // Scale in
             }
 

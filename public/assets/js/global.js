@@ -378,6 +378,7 @@ async function loadOverlayCollections() {
             if (accountCollections.includes(slug)) {
                 let collectionLink = document.createElement('a');
                 collectionLink.innerHTML = `<img src="" alt="" class="collection-icon" />${ collections[x].name }`;
+                collectionLink.classList.add('overlay-collection');
                 collectionLink.classList.add('fade-in-1-025');
 
                 if (window.pattern === slug) {

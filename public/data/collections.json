@@ -25,14 +25,5 @@
     "beta": false,
     "leaderboard": false,
     "items": 50
-  },
-  {
-    "slug": "murakami-flowers-2022-official",
-    "name": "Murakami",
-    "enabled": false,
-    "contract": "0x7d8820fa92eb1584636f4f5b8515b5476b75171a",
-    "beta": false,
-    "leaderboard": false,
-    "items": 50
   }
 ]
