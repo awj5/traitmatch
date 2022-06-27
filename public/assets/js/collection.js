@@ -196,7 +196,7 @@ async function shuffle(manual) {
         document.querySelector('h3#game-total span.game-score').textContent = window.scoreTotal;
         document.querySelector('h3#game-matches span.game-score').textContent = window.scoreMatches;
         document.querySelector('h3#game-rarity span.game-score').textContent = window.scoreRarity;
-        updateCounter();
+        updateCounter(true);
 
         if (window.scoreStreak) {
             streakBroken();
@@ -717,8 +717,22 @@ function streakBroken() {
     }
 }
 
-function updateCounter() {
-    document.querySelector('span.counter').textContent = `${ window.gameItemCount - window.items.length }/${ window.gameItemCount }`;
+function updateCounter(shuffled) {
+    const counter = document.querySelector('span.counter');
+    counter.textContent = `${ window.gameItemCount - window.items.length }/${ window.gameItemCount }`;
+    
+    if (!shuffled && !counter.classList.contains('bounce')) {
+        counter.classList.add('bounce'); // Bounce
+        counter.style.fontSize = window.innerWidth > 960 ? '30px' : '24px';
+        
+        setTimeout(() => {
+            counter.style.fontSize = '';
+            
+            setTimeout(() => {
+                counter.classList.remove('bounce'); // Reset
+            }, 250);
+        }, 250);
+    }
 }
 
 function showTraitHintsHover(item, num) {

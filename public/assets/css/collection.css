@@ -126,6 +126,10 @@ span.game-heading {
     margin-bottom: 2px;
 }
 
+span.counter.bounce {
+    transition: font-size 0.25s ease-in-out;
+}
+
 h3#game-total span.game-heading,
 h3#game-item-counter span.game-heading {
     margin-bottom: 4px;
