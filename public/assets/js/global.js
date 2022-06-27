@@ -367,7 +367,6 @@ async function loadOverlayCollections() {
     overlayBody.innerHTML = '<div class="loading-icon"></div>'; // Add loader
     const collections = await getSupportedCollections();
     const accountCollections = await getAccountCollections(await getWalletAddress());
-    overlayBody.innerHTML = ''; // Remove loader
 
     if (date === window.overlayDate) {
         var count = 0;
@@ -389,6 +388,10 @@ async function loadOverlayCollections() {
                 let collection = await getOSCollection(slug); // Get thumbnail
 
                 if (date === window.overlayDate) {
+                    if (!count) {
+                        overlayBody.innerHTML = ''; // Remove loader
+                    }
+                    
                     collectionLink.querySelector('img').setAttribute('src', collection.image_url);
                     collectionLink.classList.add((count + 1) % 2 === 0 ? 'overlay-collection-right' : 'overlay-collection-left'); // Left or right column on DT
                     overlayBody.appendChild(collectionLink); // Append collection to overlay body
