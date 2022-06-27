@@ -3,6 +3,7 @@
 /* Global vars */
 
 window.collection;
+window.collectionName;
 window.contract;
 window.collectionTotalCount;
 window.collectionTraits = [];
@@ -121,7 +122,9 @@ async function loadCollection() {
             window.contract = collectionData.primary_asset_contracts[0].address;
             window.collectionTotalCount = collectionData.stats.count; // Total items
             window.collectionTraits = collectionData.traits;
-            window.gameItemCount = collections.filter(obj => obj.slug === window.collection)[0].items;
+            const collection = collections.filter(obj => obj.slug === window.collection)[0];
+            window.gameItemCount = collection.items;
+            window.collectionName = collection.name;
             setItems(window.collection);
             window.scoreTotal = localStorage['tmScoreTotal' + window.collection] ? localStorage['tmScoreTotal' + window.collection] : 0;
             window.scoreMatches = localStorage['tmScoreMatches' + window.collection] ? localStorage['tmScoreMatches' + window.collection] : 0;
@@ -513,7 +516,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
             // Check if game over
             if (!window.items.length) {
-                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.collection] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span>`);
+                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.collection] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span><br /><br /><a href="javascript: shareScore(${ localStorage['tmScoreTotal' + window.collection] }, ${ localStorage['tmScoreMatches' + window.collection] }, ${ localStorage['tmScoreRarity' + window.collection] }, ${ localStorage['tmScoreStreak' + window.collection] });" id="game-over-share">Share</a><span id="share-copied">Copied to clipboard!</span>`);
                 recordScore(localStorage['tmScoreTotal' + window.collection]);
                 restart(false);
                 confetti();
@@ -529,7 +532,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 localStorage['tmOB3'] = true;
             } else if (window.boardItems.length < 20 && !checkMatches()) {
                 // No more matches possible
-                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.collection] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span>`);
+                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ localStorage['tmScoreTotal' + window.collection] }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span><br /><br /><a href="javascript: shareScore(${ localStorage['tmScoreTotal' + window.collection] }, ${ localStorage['tmScoreMatches' + window.collection] }, ${ localStorage['tmScoreRarity' + window.collection] }, ${ localStorage['tmScoreStreak' + window.collection] });" id="game-over-share">Share</a><span id="share-copied">Copied to clipboard!</span>`);
                 recordScore(localStorage['tmScoreTotal' + window.collection]);
                 restart(false);
             }
@@ -595,6 +598,12 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
         return matchesFound;
     }
+}
+
+function shareScore(total, matches, rarity, streak) {
+    var message = `TraitMatch ${ window.collectionName } ⭐${ matches } 💎${ rarity } ❤️${ streak } = ${ total }`;
+    document.querySelector('span#share-copied').classList.add('fade-in-1-025');
+    Copyboard.copy(message);
 }
 
 function animateScoreIcon(type, results, date) {
