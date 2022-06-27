@@ -312,12 +312,12 @@ async function loadItem(num, item, date, swapped) {
             return wildcards.length !== 0 ? true : false;
         }
 
-        // Instructions
-        if (document.querySelector('#collection-game').style.visibility === 'visible' && localStorage['tmOB3'] && document.querySelector('#overlay').style.display !== 'flex' && detectWildcards()) {
-            toggleOverlay('Wildcard Detected!', 'NFTs you own and also ones with rare 1/1 traits are wildcards that can be matched with any other NFT to receive a special bonus. Wildcards have a <span style="color: #FFFF00;">yellow</span> border when selected.');
-        }
-
         if (num === 20 || num === window.items.length) {
+            // Instructions
+            if (document.querySelector('#collection-game').style.visibility === 'visible' && localStorage['tmOB3'] && document.querySelector('#overlay').style.display !== 'flex' && detectWildcards()) {
+                toggleOverlay('Wildcard Detected!', 'NFTs you own and also ones with rare 1/1 traits are wildcards that can be matched with any other NFT to receive a special bonus. Wildcards have a <span style="color: #FFFF00;">yellow</span> border when selected.');
+            }
+
             document.querySelector('#game-controls').classList.add('enabled');
         }
 
