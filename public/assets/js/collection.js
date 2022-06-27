@@ -14,6 +14,7 @@ window.boardItems = [];
 window.selectedItem;
 window.deselectedItem;
 window.streak = false;
+window.streakAnimating = false;
 window.scoreTotal;
 window.scoreMatches;
 window.scoreRarity;
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         item.addEventListener('mouseup', () => {
-            if (!traitOverlay) {
+            if (!traitOverlay && !window.streakAnimating) {
                 selectItem(num);
             }
         });
@@ -189,6 +190,7 @@ async function shuffle(manual) {
         window.selectedItem = 0;
         window.deselectedItem = 0;
         window.streak = false;
+        window.streakAnimating = false;
         document.querySelector('#game-controls').classList.remove('enabled'); // Disable controls
 
         // Update scores and counter
@@ -516,8 +518,8 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
             // Check if game over
             if (!window.items.length) {
-                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ window.scoreTotal }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span><br /><br /><a href="javascript: shareScore(${ window.scoreTotal }, ${ window.scoreMatches }, ${ window.scoreRarity }, ${ window.scoreStreak });" id="game-over-share">Share</a><span id="share-copied">Copied to clipboard!</span>`);
-                recordScore(localStorage['tmScoreTotal' + window.collection]);
+                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ window.scoreTotal }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(window.scoreTotal) }</span><br /><br /><a href="javascript: shareScore(${ window.scoreTotal }, ${ window.scoreMatches }, ${ window.scoreRarity }, ${ window.scoreStreak });" id="game-over-share">Share</a><span id="share-copied">Copied to clipboard!</span>`);
+                recordScore(window.scoreTotal);
                 restart(false);
                 confetti();
             } else if (window.items.length === 1) {
@@ -532,8 +534,8 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 localStorage['tmOB3'] = true;
             } else if (window.boardItems.length < 20 && !checkMatches()) {
                 // No more matches possible
-                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ window.scoreTotal }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(localStorage['tmScoreTotal' + window.collection]) }</span><br /><br /><a href="javascript: shareScore(${ window.scoreTotal }, ${ window.scoreMatches }, ${ window.scoreRarity }, ${ window.scoreStreak });" id="game-over-share">Share</a><span id="share-copied">Copied to clipboard!</span>`);
-                recordScore(localStorage['tmScoreTotal' + window.collection]);
+                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ window.scoreTotal }</span><br />Your high score is <span style="color: #FFFF00;">${ await getHighScore(window.scoreTotal) }</span><br /><br /><a href="javascript: shareScore(${ window.scoreTotal }, ${ window.scoreMatches }, ${ window.scoreRarity }, ${ window.scoreStreak });" id="game-over-share">Share</a><span id="share-copied">Copied to clipboard!</span>`);
+                recordScore(window.scoreTotal);
                 restart(false);
             }
         }
@@ -698,22 +700,32 @@ function streakBroken() {
     const totalScore = document.querySelector('h3#game-total span.game-score');
     window.scoreTotal = window.scoreTotal - diff;
     window.scoreStreak = 0;
-    localStorage['tmScoreTotal'] = JSON.stringify(window.scoreTotal);
-    localStorage['tmScoreStreak'] = JSON.stringify(window.scoreStreak);
+    localStorage['tmScoreTotal' + window.collection] = JSON.stringify(window.scoreTotal);
+    localStorage['tmScoreStreak' + window.collection] = JSON.stringify(window.scoreStreak);
     window.streak = false;
+    
+    // Animate streak score
+    if (diff > 0) {
+        window.streakAnimating = true;
 
-    // Deduct from score text over loop
-    for (let x = 0; x < diff; x++) {
-        setTimeout(() => {
-            if (date === window.shuffleDate) {
-                let streak = parseFloat(streakScore.textContent);
-                streak--;
-                streakScore.textContent = streak;
-                let total = parseFloat(totalScore.textContent);
-                total--;
-                totalScore.textContent = total;
-            }
-        }, x * 50);
+        // Deduct from score text over loop
+        for (let x = 0; x < diff; x++) {
+            setTimeout(() => {
+                if (date === window.shuffleDate) {
+                    let streak = parseFloat(streakScore.textContent);
+                    streak--;
+                    streakScore.textContent = streak;
+                    let total = parseFloat(totalScore.textContent);
+                    total--;
+                    totalScore.textContent = total;
+
+                    if (x + 1 === diff) {
+                        // Last
+                        window.streakAnimating = false;
+                    }
+                }
+            }, x * 50);
+        }
     }
 }
 
