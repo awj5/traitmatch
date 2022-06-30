@@ -431,3 +431,9 @@ span#share-copied {
         }
     }
 }
+
+@media only screen and (max-width: 768px) {
+    .dark-mode #game-controls input {
+        accent-color: #999;
+    }
+}
