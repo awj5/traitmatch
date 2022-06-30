@@ -56,8 +56,6 @@ section#section-collection {
 #game-board a img {
     height: 100%;
     transform: scale(0);
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
     aspect-ratio: 4/4;
 }
 

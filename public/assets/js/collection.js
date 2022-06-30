@@ -180,7 +180,7 @@ function setItems(slug) {
     }
 }
 
-async function shuffle(manual) {
+function shuffle(manual) {
     const game = document.querySelector('#collection-game');
 
     if (!manual || manual && game.style.visibility === 'visible') {
@@ -209,7 +209,7 @@ async function shuffle(manual) {
 
         for (let x = 0; x < items.length; x++) {
             if (date === window.shuffleDate) {
-                await resetItem(x + 1, true);
+                resetItem(x + 1, true);
             }
         }
 
@@ -246,9 +246,8 @@ async function resetItem(num, shuffled) {
     
     const image = item.querySelector('img');
     image.setAttribute('class', '');
-    image.setAttribute('src', '/assets/img/placeholder.png');
+    image.setAttribute('src', '');
     image.style.transform = '';
-    await image.decode();
 }
 
 function setItem(num, date, shuffle, swapped) {
@@ -508,7 +507,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
     // Remove prev
     setTimeout(async () => {
         if (date === window.shuffleDate) {
-            await resetItem(prevSelectedItem);
+            resetItem(prevSelectedItem);
             setItem(prevSelectedItem, date, false);
 
             // Check if game over
