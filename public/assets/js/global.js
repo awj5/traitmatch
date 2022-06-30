@@ -137,7 +137,7 @@ async function patternChange() {
             }
         } else if (section === window.pattern) {
             // Does not have NFT in collection or not a supported collection
-            alert('Collection NFT not found in your wallet :-(');
+            alert('Collection NFT not found in wallet :-(');
             window.location = '/'; // Reload
         }
     } else if (document.querySelector('a#nav-item-collection').classList.contains('supported')) {

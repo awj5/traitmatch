@@ -61,7 +61,7 @@ async function loadHomeCollection(num, address, accountCollections) {
 		profile.classList.add('home-collection-profile');
 		el.appendChild(profile);
 		
-		document.querySelector('#home-collections').appendChild(el); // Add to DOM
+		document.querySelector('#home-collections').appendChild(el); // Add collection to DOM
 		
 		// Wait for images to load
 		await banner.decode();
