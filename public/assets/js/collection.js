@@ -598,7 +598,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 }
 
 function shareScore(total, matches, rarity, streak) {
-    var message = `TraitMatch ${ window.collectionName } ⭐${ matches } 💎${ rarity } ❤️${ streak } = ${ total } total`;
+    var message = `TraitMatch ${ window.collectionName } ⭐${ matches } 💎${ rarity } ❤️${ streak } = ${ total } points`;
     document.querySelector('span#share-copied').classList.add('fade-in-1-025');
     Copyboard.copy(message);
 }

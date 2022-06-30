@@ -27,7 +27,7 @@ async function leaderboards() {
         const collectionsData = await getSupportedCollections();
         
         for (let x = 0; x < collectionsData.length; x++) {
-            if (collectionsData[x].leaderboard) {
+            if (collectionsData[x].featured) {
                 let option = document.createElement('option');
                 option.text = collectionsData[x].name;
                 option.value = collectionsData[x].slug;

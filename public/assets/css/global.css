@@ -165,7 +165,6 @@ section {
 .section-wrapper {
     max-width: 1024px;
     padding: 16px;
-    box-sizing: border-box;
     width: 100%;
     margin: auto;
 }
