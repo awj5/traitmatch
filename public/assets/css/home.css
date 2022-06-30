@@ -76,6 +76,15 @@ img.home-collection-profile {
     border-color: #111;
 }
 
+#home-collections p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    height: 160px;
+    text-align: center;
+}
+
 @media only screen and (max-width: 768px) {
     section#section-home h2 {
         font-size: 30px;

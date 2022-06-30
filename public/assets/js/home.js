@@ -37,6 +37,7 @@ async function home() {
 async function loadHomeCollection(num, address, accountCollections) {
 	const date = window.homeLoadDate;
 	const collection = window.homeCollections[num];
+	const homeCollections = document.querySelector('#home-collections');
 	const data = await getOSCollection(collection.slug);
 	
 	if (window.homeLoadDate === date) {
@@ -61,7 +62,7 @@ async function loadHomeCollection(num, address, accountCollections) {
 		profile.classList.add('home-collection-profile');
 		el.appendChild(profile);
 		
-		document.querySelector('#home-collections').appendChild(el); // Add collection to DOM
+		homeCollections.appendChild(el); // Add collection to DOM
 		
 		// Wait for images to load
 		await banner.decode();
@@ -73,6 +74,8 @@ async function loadHomeCollection(num, address, accountCollections) {
 			// Next collection
 			if (window.homeCollections.length - 1 > num) {
 				loadHomeCollection(num + 1, address, accountCollections);
+			} else {
+				homeCollections.innerHTML += '<p>Wen more collections? Soon!</p>'; // Temp
 			}
 		}
 	}
