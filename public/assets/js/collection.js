@@ -730,10 +730,17 @@ function updateCounter(shuffled) {
     
     if (!shuffled && !counter.classList.contains('bounce')) {
         counter.classList.add('bounce'); // Bounce
-        counter.style.fontSize = window.innerWidth > 960 ? '30px' : '24px';
+        
+        // Different animations for DT and mobile
+        if (window.innerWidth > 960) {
+            counter.style.fontSize = '30px';
+        } else {
+            counter.style.marginLeft = '8px';
+        }
         
         setTimeout(() => {
             counter.style.fontSize = '';
+            counter.style.marginLeft = '';
             
             setTimeout(() => {
                 counter.classList.remove('bounce'); // Reset

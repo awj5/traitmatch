@@ -127,7 +127,7 @@ span.game-heading {
 }
 
 span.counter.bounce {
-    transition: font-size 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 h3#game-total span.game-heading,
