@@ -77,6 +77,14 @@ img.home-collection-profile {
 }
 
 @media only screen and (max-width: 768px) {
+    section#section-home h2 {
+        font-size: 30px;
+    }
+    
+    section#section-home h3 {
+        font-size: 16px;
+    }
+    
     .home-collection {
         height: 492px;
     }

@@ -19,24 +19,29 @@ async function home() {
 	window.homeCollections = []; // Reset
 	document.querySelector('#home-collections').innerHTML = ''; // Clear
 	const collections = await getSupportedCollections();
+	const address = await getWalletAddress();
+	const accountCollections = await getAccountCollections(address);
 	
-	// Get featured collections only
-	for (let x = 0; x < collections.length; x++) {
-		if (collections[x].featured) {
-			window.homeCollections.push(collections[x]);
+	if (window.homeLoadDate === date) {
+		// Get featured collections only
+		for (let x = 0; x < collections.length; x++) {
+			if (collections[x].featured) {
+				window.homeCollections.push(collections[x]);
+			}
 		}
+		
+		loadHomeCollection(0, address, accountCollections); // Init
 	}
-	
-	loadHomeCollection(0); // Init
 }
 
-async function loadHomeCollection(num) {
+async function loadHomeCollection(num, address, accountCollections) {
 	const date = window.homeLoadDate;
 	const collection = window.homeCollections[num];
 	const data = await getOSCollection(collection.slug);
 	
 	if (window.homeLoadDate === date) {
 		const el = document.createElement('div');
+		el.id = 'home-collection-' + collection.slug;
 		el.classList.add('home-collection');
 		
 		// Banner
@@ -46,7 +51,9 @@ async function loadHomeCollection(num) {
 		el.appendChild(banner);
 		
 		// Details
-		el.innerHTML += `<div class="home-collection-details"><h4>${ collection.name }</h4><a href="">Connect to Play</a></div>`;
+		const buttonText = getHomeCollectionButton(collection.slug, address, accountCollections)[0];
+		const buttonLink = getHomeCollectionButton(collection.slug, address, accountCollections)[1];
+		el.innerHTML += `<div class="home-collection-details"><h4>${ collection.name }</h4><a href="javascript: ${ buttonLink };">${ buttonText }</a></div>`;
 		
 		// Profile image
 		const profile = document.createElement('img');
@@ -65,8 +72,28 @@ async function loadHomeCollection(num) {
 			
 			// Next collection
 			if (window.homeCollections.length - 1 > num) {
-				loadHomeCollection(num + 1);
+				loadHomeCollection(num + 1, address, accountCollections);
 			}
 		}
 	}
+}
+
+function getHomeCollectionButton(slug, address, accountCollections) {
+	var results = [];
+	
+	if (accountCollections.includes(slug)) {
+		// Has NFT
+		results.push('Play Now');
+		results.push(`history.pushState(null, null, '${ slug }')`);
+	} else if (address) {
+		// Does not have NFT
+		results.push('Buy on OpenSea');
+		results.push(`window.open('https://opensea.io/collection/${ slug }', '_blank')`);
+	} else {
+		// Not connected
+		results.push('Connect to Play');
+		results.push(`connectWallet('${ slug }')`);
+	}
+	
+	return results;
 }

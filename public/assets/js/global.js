@@ -137,6 +137,7 @@ async function patternChange() {
             }
         } else if (section === window.pattern) {
             // Does not have NFT in collection or not a supported collection
+            alert('Collection NFT not found in your wallet :-(');
             window.location = '/'; // Reload
         }
     } else if (document.querySelector('a#nav-item-collection').classList.contains('supported')) {
@@ -195,7 +196,7 @@ async function getWalletAddress() {
     return address;
 }
 
-async function connectWallet() {
+async function connectWallet(slug) {
     // Check for MetaMask
     if (typeof window.ethereum !== 'undefined') {
         // MetaMask installed
@@ -211,13 +212,28 @@ async function connectWallet() {
         if (accounts) {
             // Has account
             walletConnected(accounts[0]);
+            
+            // Home collections
+            if (window.pattern === 'home' && !slug) {
+                const accountCollections = await getAccountCollections(accounts[0]);
+                
+                for (let x = 0; x < window.homeCollections.length; x++) {
+                    let slug = window.homeCollections[x].slug;
+                    
+                    if (window.pattern === 'home' && document.querySelector('#home-collection-' + slug)) {
+                        let link = document.querySelector(`#home-collection-${ slug } a`);
+                        link.textContent = getHomeCollectionButton(slug, accounts[0], accountCollections)[0];
+                        link.href = `javascript: ${ getHomeCollectionButton(slug, accounts[0], accountCollections)[1] };`;
+                    }
+                }
+            }
 
             // Redirect if referrer is collection
             const referrer = document.referrer;
 
-            if (referrer.indexOf('localhost') || referrer.indexOf('traitmatch.io') || referrer.indexOf('traitmatch.herokuapp')) {
+            if (slug || referrer.indexOf('localhost') || referrer.indexOf('traitmatch.io') || referrer.indexOf('traitmatch.herokuapp')) {
                 const index = referrer.lastIndexOf('/');
-                const collection = referrer.substring(index + 1);
+                const collection = slug ? slug : referrer.substring(index + 1);
 
                 if (collection && collection !== 'how' && collection !== 'leaderboards') {
                     history.pushState(null, null, collection); // Redirect
