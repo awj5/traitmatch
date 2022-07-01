@@ -142,12 +142,24 @@ async function loadCollection() {
                     console.error(error);
                 }
             }
+            
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+            
+            shuffleArray(nfts); // Shuffle holder NFTs
 
             if (window.collection === window.pattern) {
                 window.collectionTokens = []; // Reset
 
                 for (let x = 0; x < nfts.length; x++) {
-                    window.collectionTokens.push(nfts[x].metadata.name.split('#').pop());
+                    // Max 3 wildcards
+                    if (window.collectionTokens.length < 3) {
+                        window.collectionTokens.push(nfts[x].metadata.name.split('#').pop());
+                    }
                 }
 
                 shuffle(); // Init
