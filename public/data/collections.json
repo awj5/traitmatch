@@ -2,9 +2,9 @@
   {
     "slug": "dourdarcels",
     "name": "Dour Darcels",
-    "enabled": false,
+    "enabled": true,
     "contract": "0x8d609bd201beaea7dccbfbd9c22851e23da68691",
-    "beta": true,
+    "beta": false,
     "featured": true,
     "items": 60
   },
