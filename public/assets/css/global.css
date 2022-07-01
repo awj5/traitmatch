@@ -111,6 +111,7 @@ select {
 
 .scale-up-1-025 {
     animation: scaleUp1 ease-out .25s forwards;
+    animation-delay: .1s; /* Hack!! - iOS Safari flicker fix */
 }
 
 @keyframes fadeIn1 {
