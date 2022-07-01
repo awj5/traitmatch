@@ -323,13 +323,22 @@ a#nav-dark-mode {
     bottom: 42px;
 }
 
+a#nav-twitter {
+    right: auto;
+    left: 0;
+}
+
 a.nav-footer-item svg {
     fill: #111;
-    height: 24px;
+    width: 24px;
 }
 
 .dark-mode a.nav-footer-item svg {
     fill: #EEE;
+}
+
+a#nav-twitter svg {
+    vertical-align: -5px;
 }
 
 @media only screen and (max-width: 768px) {
