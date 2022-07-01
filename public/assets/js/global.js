@@ -127,7 +127,7 @@ async function patternChange() {
         const accountCollections = await getAccountCollections(await getWalletAddress());
 
         // Verify if account owns an NFT in supported collection
-        if (section === window.pattern && accountCollections.includes(window.pattern)) {
+        if (section === window.pattern && accountCollections.includes(window.pattern) || window.demo) {
             // Has NFT in supported collection
             const collection = await getOSCollection(window.pattern);
 
