@@ -91,7 +91,7 @@ async function loadLeaderboard() {
                     let wallet = scores[x].wallet;
                     let thumb = scores[x].token ? `https://traitmatch.s3.us-west-1.amazonaws.com/${ slug }/${ scores[x].token }.png` : '/assets/img/placeholder.png';
                     let address = walletAddress && walletAddress === wallet ? '<span class="leaderboards-list-you">You</span>' : `${ wallet.substring(0, 5) }...${ wallet.substring(wallet.length -  4) }`;
-                    row.innerHTML = `<span>${ x + 1 }.</span><img src="${ thumb }" alt="" />${ address }<span class="leaderboards-list-score">${ scores[x].score }</span>`; // Minimised address
+                    row.innerHTML = `<span class="leaderboards-list-number">${ x + 1 }.</span><img src="${ thumb }" alt="" />${ address }<span class="leaderboards-list-score">${ scores[x].score }</span>`; // Minimised address
                     row.classList.add('fade-in-1-025');
                     list.appendChild(row);
                 }
