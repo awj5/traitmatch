@@ -125,7 +125,7 @@ span.game-heading {
 }
 
 span.counter.bounce {
-    transition: all 0.2s ease-in-out;
+    transition: font-size 0.2s ease-in-out;
 }
 
 h3#game-total span.game-heading,
@@ -373,6 +373,7 @@ span#share-copied {
 
     #collection-game aside h3#game-item-counter {
         font-size: 16px;
+        height: 42px;
     }
 
     span.game-heading {

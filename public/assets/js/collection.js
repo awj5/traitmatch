@@ -260,7 +260,7 @@ async function resetItem(num, shuffled) {
     
     const image = item.querySelector('img');
     image.setAttribute('class', '');
-    image.setAttribute('src', '');
+    image.setAttribute('src', '/assets/img/placeholder.png');
     image.style.transform = '';
 }
 
@@ -751,17 +751,10 @@ function updateCounter(shuffled) {
     
     if (!shuffled && !counter.classList.contains('bounce')) {
         counter.classList.add('bounce'); // Bounce
-        
-        // Different animations for DT and mobile
-        if (window.innerWidth > 960) {
-            counter.style.fontSize = '30px';
-        } else {
-            counter.style.marginLeft = '8px';
-        }
+        counter.style.fontSize = window.innerWidth > 960 ? '30px' : '24px'; // Different sizes for DT and mobile
         
         setTimeout(() => {
             counter.style.fontSize = '';
-            counter.style.marginLeft = '';
             
             setTimeout(() => {
                 counter.classList.remove('bounce'); // Reset
