@@ -9,6 +9,7 @@ window.collectionTotalCount;
 window.collectionTraits = [];
 window.shuffleDate;
 window.items = [];
+window.wildcards = [];
 window.gameItemCount;
 window.boardItems = [];
 window.selectedItem;
@@ -156,7 +157,7 @@ async function loadCollection() {
                 window.collectionTokens = []; // Reset
 
                 for (let x = 0; x < nfts.length; x++) {
-                    // Max 3 wildcards
+                    // Max 3 owned wildcards
                     if (window.collectionTokens.length < 3) {
                         window.collectionTokens.push(nfts[x].metadata.name.split('#').pop());
                     }
@@ -175,8 +176,13 @@ function setItems(slug) {
     if (localStorage['tmItems' + slug]) {
         // Already set
         window.items = JSON.parse(localStorage['tmItems' + slug]);
+        
+        if (localStorage['tmWildcards' + slug]) {
+            window.wildcards = JSON.parse(localStorage['tmWildcards' + slug]);
+        }
     } else {
         window.items = []; // Clear
+        window.wildcards = []; // Clear
 
         // Set new selection of items
         var loopCount = 0;
@@ -368,6 +374,7 @@ function swapItem(num, item, date) {
 function restart(confirm) {
     if (!confirm || document.querySelector('#collection-game').style.visibility === 'visible' && window.confirm('Are you sure you want to restart your game?')) {
         localStorage.removeItem('tmItems' + window.collection);
+        localStorage.removeItem('tmWildcards' + window.collection);
         window.scoreTotal = 0;
         window.scoreMatches = 0;
         window.scoreRarity = 0;
@@ -417,6 +424,8 @@ function matchTraits(num) {
     const selectedTraits = window[`item${ num }Traits`];
     const prevItem = document.querySelector('a#board-item-' + window.selectedItem);
     const prevTraits = window[`item${ window.selectedItem }Traits`];
+    const selected = document.querySelector('a#board-item-' + num);
+    const selectedToken = selected.getAttribute('data-item');
     var matchesFound = 0;
     var rarityBonus = 0;
 
@@ -425,9 +434,14 @@ function matchTraits(num) {
         let prevTrait = prevTraits[x];
 
         // Point and bonus for all traits (less than 50%) if wildcard
-        if ((prevItem.classList.contains('wildcard') || document.querySelector('a#board-item-' + num).classList.contains('wildcard')) && window.collectionTraits[prevTrait.trait_type][prevTrait.value.toLowerCase()] < window.collectionTotalCount / 2) {
-            matchesFound++;
-            rarityBonus++;
+        if ((prevItem.classList.contains('wildcard') || selected.classList.contains('wildcard')) && window.collectionTraits[prevTrait.trait_type][prevTrait.value.toLowerCase()] < window.collectionTotalCount / 2) {
+            // Detect if wildcard already used
+            if (selected.classList.contains('wildcard') && window.wildcards.includes(selectedToken)) {
+                matchesFound = !matchesFound ? 1 : matchesFound; // Only 1 match point
+            } else {
+                matchesFound++;
+                rarityBonus++;
+            }
         } else {
             // Loop all traits in currently selected
             for (let x = 0; x < selectedTraits.length; x++) {
@@ -442,6 +456,12 @@ function matchTraits(num) {
                 }
             }
         }
+    }
+    
+    // Store wildcard so can't be used again
+    if (selected.classList.contains('wildcard') && !window.wildcards.includes(selectedToken)) {
+        window.wildcards.push(selectedToken);
+        localStorage['tmWildcards' + window.collection] = JSON.stringify(window.wildcards); // Update local storage
     }
 
     if (matchesFound) {
