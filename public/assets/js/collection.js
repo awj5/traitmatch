@@ -392,12 +392,13 @@ function selectItem(num) {
 
         window.deselectedItem = 0; // Reset
 
-        if (window.selectedItem === num) {
+        // Cannot deselect wildcard
+        if (window.selectedItem === num && !document.querySelector('a#board-item-' + num).classList.contains('wildcard')) {
             // Deselect
             document.querySelector('a#board-item-' + num).classList.remove('selected');
             window.selectedItem = 0;
             window.deselectedItem = num;
-        } else {
+        } else if (window.selectedItem !== num) {
             // Select
             document.querySelector('a#board-item-' + num).classList.add('selected');
             window.selectedItem = num;
