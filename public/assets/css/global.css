@@ -166,6 +166,7 @@ section {
 .section-wrapper {
     max-width: 1024px;
     padding: 16px;
+    padding-bottom: 32px;
     width: 100%;
     margin: auto;
 }
