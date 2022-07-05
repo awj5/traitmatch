@@ -431,5 +431,5 @@ async function loadOverlayCollections() {
 }
 
 function openSupport() {
-    toggleOverlay('Support', 'Please tweet or DM TraitMatch on <a href="https://twitter.com/traitmatch" target="_blank">Twitter</a> if you have any issues or find any bugs.<br /><br />Please also use <a href="https://twitter.com/traitmatch" target="_blank">Twitter</a> to suggest NFT collections that you would like to see TraitMatch support.<br /><br />Traitmatch is developed by <a href="https://twitter.com/adam_wj5" target="_blank">Adam WJ5</a>');
+    toggleOverlay('Support', 'Please tweet or DM TraitMatch on <a href="https://twitter.com/traitmatch" target="_blank">Twitter</a> if you have any issues or find any bugs.<br /><br />Please also use <a href="https://twitter.com/traitmatch" target="_blank">Twitter</a> to suggest NFT collections that you would like to see TraitMatch support.<br /><br />Traitmatch is developed by <a href="https://twitter.com/adam_wj5" target="_blank">Adam WJ5</a>.');
 }

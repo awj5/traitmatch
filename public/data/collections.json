@@ -9,21 +9,12 @@
     "items": 60
   },
   {
-    "slug": "cryptorayrays-collection",
-    "name": "CryptoRayRays",
+    "slug": "boredapeyachtclub",
+    "name": "BAYC",
     "enabled": false,
-    "contract": "0x8d4e2435c262eb6df10e5e4672a8f07e42d8d67e",
+    "contract": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
     "beta": false,
     "featured": false,
-    "items": 50
-  },
-  {
-    "slug": "foxfam",
-    "name": "FoxFam",
-    "enabled": false,
-    "contract": "0x7cba74d0b16c8e18a9e48d3b7404d7739bb24f23",
-    "beta": false,
-    "featured": false,
-    "items": 50
+    "items": 60
   }
 ]

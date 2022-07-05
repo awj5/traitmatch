@@ -166,7 +166,7 @@ section {
 .section-wrapper {
     max-width: 1024px;
     padding: 16px;
-    padding-bottom: 32px;
+    padding-bottom: 48px;
     width: 100%;
     margin: auto;
 }
@@ -341,6 +341,12 @@ a.nav-footer-item svg {
 
 a#nav-twitter svg {
     vertical-align: -4px;
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1536px) {
+    a#nav-twitter span {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 768px) {
