@@ -331,7 +331,8 @@ async function loadItem(num, item, date, swapped) {
             toggleOverlay('Wildcard Detected!', 'NFTs you own and also ones with rare 1/1 traits are wildcards that can be matched with any other NFT to receive a special bonus. Wildcards have a <span style="color: #FFFF00;">yellow</span> border when selected.');
         }
 
-        if (window.items.length <= window.gameItemCount - 20) {
+        //if (window.items.length <= window.gameItemCount - 20) {
+        if (num === 20 || num === window.items.length) {
             document.querySelector('#game-controls').classList.add('enabled');
         }
 
