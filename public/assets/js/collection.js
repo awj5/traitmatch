@@ -61,13 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Incase hover gets stuck on mobile
-    hover.addEventListener('click', () => {
+    /* hover.addEventListener('click', () => {
         hideTraitHintsHover();
-    });
+    }); */
 
     const items = document.querySelectorAll('#game-board a');
     var delay;
     var traitOverlay;
+    
+    document.querySelector('#collection-game').addEventListener('touchend', () => {
+        hideTraitHintsHover();
+    
+        setTimeout(() => {
+            traitOverlay = false;
+        }, 100); // Avoid clash with mouseup
+    
+        clearTimeout(delay);
+    });
 
     for (let x = 0; x < items.length; x++) {
         let item = items[x];
@@ -92,16 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 showTraitHintsHover(item.getAttribute('data-item'), num);
                 traitOverlay = true;
             }, 500);
-        });
-
-        item.addEventListener('touchend', () => {
-            hideTraitHintsHover();
-
-            setTimeout(() => {
-                traitOverlay = false;
-            }, 100); // Avoid clash with mouseup
-
-            clearTimeout(delay);
         });
 
         item.addEventListener('mouseup', () => {
