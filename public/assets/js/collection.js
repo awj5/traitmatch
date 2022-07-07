@@ -225,25 +225,21 @@ function shuffle(manual) {
         updateCounter(true);
 
         if (window.scoreStreak) {
-            streakBroken();
+            streakBroken(date);
         }
 
         // Reset all board items
         const items = document.querySelectorAll('#game-board a');
 
         for (let x = 0; x < items.length; x++) {
-            if (date === window.shuffleDate) {
-                resetItem(x + 1, true);
-            }
+            resetItem(x + 1, true);
         }
 
-        if (date === window.shuffleDate) {
-            if (window.collection === window.pattern) {
-                game.style.visibility = 'visible'; // Show
-            }
-            
-            setItem(1, date, true); // Set first item
+        if (window.collection === window.pattern) {
+            game.style.visibility = 'visible'; // Show
         }
+        
+        setItem(1, date, true); // Set first item
 
         // Instructions
         if (game.style.visibility === 'visible' && !localStorage['tmOB1']) {
@@ -397,9 +393,9 @@ function selectItem(num) {
     if (document.querySelector('#collection-game').style.visibility === 'visible') {
         // Prev selected item
         if (window.selectedItem && window.selectedItem !== num) {
-            matchTraits(num);
+            matchTraits(num, window.shuffleDate);
         } else if (window.deselectedItem && window.deselectedItem !== num) {
-            streakBroken();
+            streakBroken(window.shuffleDate);
         }
 
         window.deselectedItem = 0; // Reset
@@ -424,8 +420,7 @@ function selectItem(num) {
     }
 }
 
-function matchTraits(num) {
-    const date = window.shuffleDate;
+function matchTraits(num, date) {
     const selectedTraits = window[`item${ num }Traits`];
     const prevItem = document.querySelector('a#board-item-' + window.selectedItem);
     const prevTraits = window[`item${ window.selectedItem }Traits`];
@@ -472,7 +467,7 @@ function matchTraits(num) {
     if (matchesFound) {
         showMatchResult(date, window.selectedItem, prevItem, matchesFound, rarityBonus);
     } else {
-        streakBroken();
+        streakBroken(date);
     }
 
     prevItem.classList.remove('selected'); // Reset
@@ -572,7 +567,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 const lastItem = document.querySelector(`a[data-item="${ window.boardItems[0] }"]`);
                 const lastItemNum = lastItem.getAttribute('id').replace('board-item-', '');
                 window.selectedItem = lastItemNum;
-                matchTraits(lastItemNum);
+                matchTraits(lastItemNum, date);
             } else if (document.querySelector('#collection-game').style.visibility === 'visible' && !localStorage['tmOB3']) {
                 // Instructions
                 toggleOverlay('Boom 💥', 'You did it! Now clear another and get a streak going. Your goal is to clear the board and get the highest score. LFG!<br /><br /><span style="color: #FF0000;">Beware:</span> You\'ll get a bonus for maintaining a streak but if you shuffle the board, select NFTs with no matching traits or leave the game your streak bonus will reset to zero.');
@@ -741,13 +736,12 @@ function scoreAdd(type) {
     }
 }
 
-function streakBroken() {
+function streakBroken(date) {
     if (document.querySelector('#collection-game').style.visibility === 'visible' && document.querySelector('#overlay').style.display !== 'flex' && window.scoreStreak !== 0) {
         // Instructions
         toggleOverlay('Uh-oh!', 'You lost your streak bonus 💔 If you shuffle the board, select NFTs with no matching traits or leave the game your streak bonus will reset to zero.');
     }
 
-    const date = window.shuffleDate;
     const diff = parseInt(window.scoreStreak);
     const streakScore = document.querySelector('h3#game-streak span.game-score');
     const totalScore = document.querySelector('h3#game-total span.game-score');
