@@ -124,6 +124,7 @@ async function patternChange() {
 
     if (isCollection) {
         // Collection
+        document.querySelector('section#section-collection .loading-icon').style.display = 'inline'; // Show loading
         const accountCollections = await getAccountCollections(await getWalletAddress());
 
         // Verify if account owns an NFT in supported collection
@@ -137,7 +138,7 @@ async function patternChange() {
             }
         } else if (section === window.pattern) {
             // Does not have NFT in collection or not a supported collection
-            alert('Collection NFT not found in wallet :-(');
+            alert('Collection NFT not found in wallet or collection not supported.');
             window.location = '/'; // Reload
         }
     } else if (document.querySelector('a#nav-item-collection').classList.contains('supported')) {

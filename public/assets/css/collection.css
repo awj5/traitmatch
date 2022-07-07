@@ -6,6 +6,15 @@ section#section-collection {
     height: calc(100% - 52px);
 }
 
+section#section-collection .loading-icon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -12px;
+    margin-top: 14px;
+    display: none;
+}
+
 #collection-game {
     height: 100%;
     min-height: 576px;

@@ -115,6 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
 /* Collection */
 
 async function loadCollection() {
+    const loadingIcon = document.querySelector('section#section-collection .loading-icon');
+    
     if (window.collection !== window.pattern) {
         window.collection = window.pattern;
         const collectionData = await getOSCollection(window.collection);
@@ -164,11 +166,13 @@ async function loadCollection() {
                 }
 
                 shuffle(); // Init
+                loadingIcon.style.display = '';
             }
         }
     } else {
         // Collection hasn't changed
         document.querySelector('#collection-game').style.visibility = 'visible';
+        loadingIcon.style.display = '';
     }
 }
 
