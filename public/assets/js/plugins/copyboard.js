@@ -18,6 +18,7 @@ class Copyboard {
         input.setAttribute('id', 'copyToClipboard');
         input.value = string;
         input.style.opacity = 0;
+        input.setAttribute('readonly', 'readonly');
         document.querySelector('body').after(input);
 
         // Get input and select value
