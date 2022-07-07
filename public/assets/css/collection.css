@@ -35,6 +35,7 @@ section#section-collection {
     pointer-events: none;
     position: relative;
     cursor: pointer;
+    aspect-ratio: 4/4;
 }
 
 .dark-mode #game-board a {
@@ -54,6 +55,7 @@ section#section-collection {
 }
 
 #game-board a img {
+    width: 100%;
     height: 100%;
     transform: scale(0);
     aspect-ratio: 4/4;
@@ -324,6 +326,7 @@ span#share-copied {
         height: auto;
         min-height: 0;
         max-height: none;
+        width: 100%;
         max-width: 536px;
         display: inline;
     }

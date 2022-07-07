@@ -249,7 +249,7 @@ function shuffle(manual) {
     }
 }
 
-async function resetItem(num, shuffled) {
+function resetItem(num, shuffled) {
     const item = document.querySelector('a#board-item-' + num);
     item.removeAttribute('data-item');
     item.style.pointerEvents = '';
@@ -266,7 +266,7 @@ async function resetItem(num, shuffled) {
     
     const image = item.querySelector('img');
     image.setAttribute('class', '');
-    image.setAttribute('src', '/assets/img/placeholder.png');
+    image.setAttribute('src', '');
     image.style.transform = '';
 }
 
