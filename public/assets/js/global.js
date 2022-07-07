@@ -124,7 +124,7 @@ async function patternChange() {
 
     if (isCollection) {
         // Collection
-        document.querySelector('section#section-collection .loading-icon').style.display = 'inline'; // Show loading
+        document.querySelector('#collection-loader').style.display = 'inline'; // Show loading
         const accountCollections = await getAccountCollections(await getWalletAddress());
 
         // Verify if account owns an NFT in supported collection

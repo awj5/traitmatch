@@ -6,7 +6,7 @@ section#section-collection {
     height: calc(100% - 52px);
 }
 
-section#section-collection .loading-icon {
+#collection-loader {
     position: fixed;
     top: 50%;
     left: 50%;

@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /* Collection */
 
 async function loadCollection() {
-    const loadingIcon = document.querySelector('section#section-collection .loading-icon');
+    const loadingIcon = document.querySelector('#collection-loader');
     
     if (window.collection !== window.pattern) {
         window.collection = window.pattern;
