@@ -156,6 +156,11 @@ img.collection-icon {
     border-radius: 999px;
     vertical-align: -10px;
     margin-right: 8px;
+    background-color: #111;
+}
+
+.dark-mode img.collection-icon {
+    background-color: #EEE;
 }
 
 section {

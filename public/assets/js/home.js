@@ -75,7 +75,10 @@ async function loadHomeCollection(num, address, accountCollections) {
 			if (window.homeCollections.length - 1 > num) {
 				loadHomeCollection(num + 1, address, accountCollections);
 			} else {
-				homeCollections.innerHTML += '<p>Wen more collections? Soon!</p>'; // Temp
+				// Temp
+				const note = document.createElement('p');
+				note.textContent = 'Wen more collections? Soon!';
+				homeCollections.appendChild(note);
 			}
 		}
 	}
