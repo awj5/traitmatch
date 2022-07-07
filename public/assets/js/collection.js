@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Incase hover gets stuck on mobile
-    hover.addEventListener('click', (e) => {
+    hover.addEventListener('click', () => {
         hideTraitHintsHover();
     });
 
@@ -549,17 +549,24 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
         if (date === window.shuffleDate) {
             resetItem(prevSelectedItem);
             setItem(prevSelectedItem, date, false);
+            const totalScore = window.scoreTotal;
+            const matchesScore = window.scoreMatches;
+            const rarityScore = window.scoreRarity;
+            const streakScore = window.scoreStreak;
 
             // Check if game over
             if (!window.items.length) {
-                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ window.scoreTotal }</span><br />Your high score is <span style="color: #FFFF00;">${ window.demo ? '0' : await getHighScore(window.scoreTotal) }</span><br /><br /><a href="javascript: shareScore(${ window.scoreTotal }, ${ window.scoreMatches }, ${ window.scoreRarity }, ${ window.scoreStreak });" id="game-over-share">Share<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.05 40"><path d="M30.35,40a5.7,5.7,0,0,1-5.7-5.7,5.6,5.6,0,0,1,.08-.83A4.61,4.61,0,0,1,25,32.6L9.8,23.8A5.69,5.69,0,0,1,8,25.17a5.16,5.16,0,0,1-2.25.53,5.49,5.49,0,0,1-4-1.68,5.7,5.7,0,0,1,0-8.07,5.5,5.5,0,0,1,4-1.65,5.52,5.52,0,0,1,2.2.45,6,6,0,0,1,1.9,1.3L25,7.35a3.43,3.43,0,0,1-.23-.8,5.12,5.12,0,0,1-.07-.85,5.49,5.49,0,0,1,1.67-4.05A5.69,5.69,0,0,1,36.05,5.7a5.54,5.54,0,0,1-1.65,4,5.49,5.49,0,0,1-4,1.67A6.73,6.73,0,0,1,28.12,11,4.27,4.27,0,0,1,26.3,9.8L11.15,18.2a8.51,8.51,0,0,1,.17.92,5.36,5.36,0,0,1,.08.88,3.43,3.43,0,0,1-.08.75c-.05.27-.1.53-.17.8l15.15,8.6a5.78,5.78,0,0,1,4.05-1.55,5.71,5.71,0,0,1,4,9.73A5.49,5.49,0,0,1,30.35,40Zm0-31.6a2.66,2.66,0,0,0,2.7-2.7,2.7,2.7,0,1,0-5.4,0,2.65,2.65,0,0,0,2.7,2.7ZM5.7,22.7A2.65,2.65,0,0,0,8.4,20a2.66,2.66,0,0,0-2.7-2.7A2.63,2.63,0,0,0,3,20a2.65,2.65,0,0,0,2.7,2.7ZM30.35,37a2.7,2.7,0,1,0,0-5.4,2.7,2.7,0,1,0,0,5.4Z"/></svg></a><span id="share-copied">Copied to clipboard!</span>`);
-                
                 if (!window.demo) {
-                    recordScore(window.scoreTotal);
+                    recordScore(totalScore);
                 }
                 
                 restart(false);
                 confetti();
+                toggleOverlay('WAGMI!', `Woo hoo! You cleared the board 🎉 Well done fren.<br /><br />You scored <span style="color: #87CEEB;">${ totalScore }</span><br />Your high score is <span style="color: #FFFF00;" id="overlay-high-score"></span><br /><br /><a href="javascript: shareScore(${ totalScore }, ${ matchesScore }, ${ rarityScore }, ${ streakScore });" id="game-over-share">Share<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.05 40"><path d="M30.35,40a5.7,5.7,0,0,1-5.7-5.7,5.6,5.6,0,0,1,.08-.83A4.61,4.61,0,0,1,25,32.6L9.8,23.8A5.69,5.69,0,0,1,8,25.17a5.16,5.16,0,0,1-2.25.53,5.49,5.49,0,0,1-4-1.68,5.7,5.7,0,0,1,0-8.07,5.5,5.5,0,0,1,4-1.65,5.52,5.52,0,0,1,2.2.45,6,6,0,0,1,1.9,1.3L25,7.35a3.43,3.43,0,0,1-.23-.8,5.12,5.12,0,0,1-.07-.85,5.49,5.49,0,0,1,1.67-4.05A5.69,5.69,0,0,1,36.05,5.7a5.54,5.54,0,0,1-1.65,4,5.49,5.49,0,0,1-4,1.67A6.73,6.73,0,0,1,28.12,11,4.27,4.27,0,0,1,26.3,9.8L11.15,18.2a8.51,8.51,0,0,1,.17.92,5.36,5.36,0,0,1,.08.88,3.43,3.43,0,0,1-.08.75c-.05.27-.1.53-.17.8l15.15,8.6a5.78,5.78,0,0,1,4.05-1.55,5.71,5.71,0,0,1,4,9.73A5.49,5.49,0,0,1,30.35,40Zm0-31.6a2.66,2.66,0,0,0,2.7-2.7,2.7,2.7,0,1,0-5.4,0,2.65,2.65,0,0,0,2.7,2.7ZM5.7,22.7A2.65,2.65,0,0,0,8.4,20a2.66,2.66,0,0,0-2.7-2.7A2.63,2.63,0,0,0,3,20a2.65,2.65,0,0,0,2.7,2.7ZM30.35,37a2.7,2.7,0,1,0,0-5.4,2.7,2.7,0,1,0,0,5.4Z"/></svg></a><span id="share-copied">Copied to clipboard!</span>`);
+                
+                if (!window.demo) {
+                    getHighScore(totalScore);
+                }
             } else if (window.items.length === 1) {
                 // Clear last item automatically
                 const lastItem = document.querySelector(`a[data-item="${ window.boardItems[0] }"]`);
@@ -570,15 +577,18 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                 // Instructions
                 toggleOverlay('Boom 💥', 'You did it! Now clear another and get a streak going. Your goal is to clear the board and get the highest score. LFG!<br /><br /><span style="color: #FF0000;">Beware:</span> You\'ll get a bonus for maintaining a streak but if you shuffle the board, select NFTs with no matching traits or leave the game your streak bonus will reset to zero.');
                 localStorage['tmOB3'] = true;
-            } else if (window.items.length && window.boardItems.length < 20 && !checkMatches()) {
+            } else if (window.boardItems.length < 20 && !checkMatches()) {
                 // No more matches possible
-                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ window.scoreTotal }</span><br />Your high score is <span style="color: #FFFF00;">${ window.demo ? '0' : await getHighScore(window.scoreTotal) }</span><br /><br /><a href="javascript: shareScore(${ window.scoreTotal }, ${ window.scoreMatches }, ${ window.scoreRarity }, ${ window.scoreStreak });" id="game-over-share">Share<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.05 40"><path d="M30.35,40a5.7,5.7,0,0,1-5.7-5.7,5.6,5.6,0,0,1,.08-.83A4.61,4.61,0,0,1,25,32.6L9.8,23.8A5.69,5.69,0,0,1,8,25.17a5.16,5.16,0,0,1-2.25.53,5.49,5.49,0,0,1-4-1.68,5.7,5.7,0,0,1,0-8.07,5.5,5.5,0,0,1,4-1.65,5.52,5.52,0,0,1,2.2.45,6,6,0,0,1,1.9,1.3L25,7.35a3.43,3.43,0,0,1-.23-.8,5.12,5.12,0,0,1-.07-.85,5.49,5.49,0,0,1,1.67-4.05A5.69,5.69,0,0,1,36.05,5.7a5.54,5.54,0,0,1-1.65,4,5.49,5.49,0,0,1-4,1.67A6.73,6.73,0,0,1,28.12,11,4.27,4.27,0,0,1,26.3,9.8L11.15,18.2a8.51,8.51,0,0,1,.17.92,5.36,5.36,0,0,1,.08.88,3.43,3.43,0,0,1-.08.75c-.05.27-.1.53-.17.8l15.15,8.6a5.78,5.78,0,0,1,4.05-1.55,5.71,5.71,0,0,1,4,9.73A5.49,5.49,0,0,1,30.35,40Zm0-31.6a2.66,2.66,0,0,0,2.7-2.7,2.7,2.7,0,1,0-5.4,0,2.65,2.65,0,0,0,2.7,2.7ZM5.7,22.7A2.65,2.65,0,0,0,8.4,20a2.66,2.66,0,0,0-2.7-2.7A2.63,2.63,0,0,0,3,20a2.65,2.65,0,0,0,2.7,2.7ZM30.35,37a2.7,2.7,0,1,0,0-5.4,2.7,2.7,0,1,0,0,5.4Z"/></svg></a><span id="share-copied">Copied to clipboard!</span>`);
-                
                 if (!window.demo) {
-                    recordScore(window.scoreTotal);
+                    recordScore(totalScore);
                 }
                 
                 restart(false);
+                toggleOverlay('Game Over', `No more matches can be made. But don't worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪<br /><br />You scored <span style="color: #87CEEB;">${ totalScore }</span><br />Your high score is <span style="color: #FFFF00;" id="overlay-high-score"></span><br /><br /><a href="javascript: shareScore(${ totalScore }, ${ matchesScore }, ${ rarityScore }, ${ streakScore });" id="game-over-share">Share<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.05 40"><path d="M30.35,40a5.7,5.7,0,0,1-5.7-5.7,5.6,5.6,0,0,1,.08-.83A4.61,4.61,0,0,1,25,32.6L9.8,23.8A5.69,5.69,0,0,1,8,25.17a5.16,5.16,0,0,1-2.25.53,5.49,5.49,0,0,1-4-1.68,5.7,5.7,0,0,1,0-8.07,5.5,5.5,0,0,1,4-1.65,5.52,5.52,0,0,1,2.2.45,6,6,0,0,1,1.9,1.3L25,7.35a3.43,3.43,0,0,1-.23-.8,5.12,5.12,0,0,1-.07-.85,5.49,5.49,0,0,1,1.67-4.05A5.69,5.69,0,0,1,36.05,5.7a5.54,5.54,0,0,1-1.65,4,5.49,5.49,0,0,1-4,1.67A6.73,6.73,0,0,1,28.12,11,4.27,4.27,0,0,1,26.3,9.8L11.15,18.2a8.51,8.51,0,0,1,.17.92,5.36,5.36,0,0,1,.08.88,3.43,3.43,0,0,1-.08.75c-.05.27-.1.53-.17.8l15.15,8.6a5.78,5.78,0,0,1,4.05-1.55,5.71,5.71,0,0,1,4,9.73A5.49,5.49,0,0,1,30.35,40Zm0-31.6a2.66,2.66,0,0,0,2.7-2.7,2.7,2.7,0,1,0-5.4,0,2.65,2.65,0,0,0,2.7,2.7ZM5.7,22.7A2.65,2.65,0,0,0,8.4,20a2.66,2.66,0,0,0-2.7-2.7A2.63,2.63,0,0,0,3,20a2.65,2.65,0,0,0,2.7,2.7ZM30.35,37a2.7,2.7,0,1,0,0-5.4,2.7,2.7,0,1,0,0,5.4Z"/></svg></a><span id="share-copied">Copied to clipboard!</span>`);
+                
+                if (!window.demo) {
+                    getHighScore(totalScore);
+                }
             }
         }
     }, 3250);
@@ -591,11 +601,12 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
             if (highScore.length && highScore[0].score > score) {
                 score = highScore[0].score;
             }
-
-            return score;
+            
+            if (document.querySelector('span#overlay-high-score')) {
+                document.querySelector('span#overlay-high-score').textContent = score; // Add to overlay
+            }
         } catch (error) {
             console.error(error);
-            return null;
         }
     }
 
