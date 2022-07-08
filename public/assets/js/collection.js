@@ -332,8 +332,8 @@ async function loadItem(num, item, date, swapped) {
         }
 
         // Controls
-        if (parseInt(localStorage['tmRestarts' + window.collection]) === 3 && window.items.length <= window.gameItemCount - 20) {
-            // 20 items cleared so restart allowed again
+        if (window.items.length <= window.gameItemCount - 20 && parseInt(localStorage['tmRestarts' + window.collection]) !== 0) {
+            // 20 items cleared so restart count resets
             document.querySelector('#game-controls').classList.add('enabled');
             localStorage['tmRestarts' + window.collection] = 0; // Reset
         } else if ((num === 20 || num === window.items.length) && parseInt(localStorage['tmRestarts' + window.collection]) !== 3) {
