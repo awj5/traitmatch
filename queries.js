@@ -58,7 +58,7 @@ const getUserScore = async (request, response) => {
 
 const getCollectionScores = async (request, response) => {
     try {
-        const select = await pool.query('SELECT wallet, MAX(score) AS score, MAX(date) AS date, MIN(token) AS token FROM scores WHERE collection = $1 AND $2 = 0 OR collection = $1 AND date > now() - interval \'1 day\' * $2 GROUP BY wallet ORDER BY score DESC, date ASC LIMIT 50', [request.params.slug, request.params.range])
+        const select = await pool.query('SELECT wallet, MAX(score) AS score, MIN(date) AS date, MIN(token) AS token FROM scores WHERE collection = $1 AND $2 = 0 OR collection = $1 AND date > now() - interval \'1 day\' * $2 GROUP BY wallet ORDER BY score DESC, date LIMIT 50', [request.params.slug, request.params.range])
         response.status(200).json(select.rows)
     } catch (error) {
         console.log(error)
