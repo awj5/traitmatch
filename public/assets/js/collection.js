@@ -331,8 +331,11 @@ async function loadItem(num, item, date, swapped) {
             toggleOverlay('Wildcard Detected!', 'NFTs you own and also ones with rare 1/1 traits are wildcards that can be matched with any other NFT to receive a special bonus. Wildcards have a <span style="color: #FFFF00;">yellow</span> border when selected.');
         }
 
-        //if (window.items.length <= window.gameItemCount - 20) {
-        if (num === 20 || num === window.items.length) {
+        if (parseInt(localStorage['tmRestarts' + window.collection]) === 3 && window.items.length <= window.gameItemCount - 20) {
+            // 20 items cleared so restart allowed again
+            document.querySelector('#game-controls').classList.add('enabled');
+            localStorage['tmRestarts' + window.collection] = 0; // Reset
+        } else if ((num === 20 || num === window.items.length) && parseInt(localStorage['tmRestarts' + window.collection]) !== 3) {
             document.querySelector('#game-controls').classList.add('enabled');
         }
 
@@ -384,6 +387,7 @@ function restart(confirm) {
         localStorage['tmScoreMatches' + window.collection] = window.scoreMatches;
         localStorage['tmScoreRarity' + window.collection] = window.scoreRarity;
         localStorage['tmScoreStreak' + window.collection] = window.scoreStreak;
+        localStorage['tmRestarts' + window.collection] = (localStorage['tmRestarts' + window.collection] ? parseInt(localStorage['tmRestarts' + window.collection]) : 0) + 1; // Count collection restarts
         setItems(window.collection); // Get new selection
         shuffle(true);
     }
