@@ -522,17 +522,17 @@ function getRarityBonus(traitCount) {
             bonus = 8;
         } else if (rarityPercentage <= 1) {
             bonus = 7;
-        } else if (rarityPercentage <= 1.5) {
+        } else if (rarityPercentage <= 1.25) {
             bonus = 6;
-        } else if (rarityPercentage <= 2) {
+        } else if (rarityPercentage <= 1.5) {
             bonus = 5;
-        } else if (rarityPercentage <= 2.5) {
+        } else if (rarityPercentage <= 1.75) {
             bonus = 4;
-        } else if (rarityPercentage <= 3) {
+        } else if (rarityPercentage <= 2) {
             bonus = 3;
-        } else if (rarityPercentage <= 4) {
+        } else if (rarityPercentage <= 2.5) {
             bonus = 2;
-        } else if (rarityPercentage <= 5) {
+        } else if (rarityPercentage <= 3) {
             bonus = 1;
         }
     }
@@ -838,7 +838,7 @@ function showTraitHintsHover(item, num) {
             // Only traits less than 50% rarity
             if (traitCount < window.collectionTotalCount / 2) {
                 let rarityPercentage = traitCount / window.collectionTotalCount * 100;
-                traitsList += `<br /><span id="hover-type">${ trait.trait_type }:</span> <span style="${ window.collection === 'dourdarcels' && rarityPercentage <= 2.5 || window.collection !== 'dourdarcels' && rarityPercentage <= 5 ? 'color: #87CEEB;' : '' }">${ trait.value } (${ rarityPercentage.toFixed(1) }%)</span>`;
+                traitsList += `<br /><span id="hover-type">${ trait.trait_type }:</span> <span style="${ window.collection === 'dourdarcels' && rarityPercentage <= 2.5 || window.collection !== 'dourdarcels' && rarityPercentage <= 3 ? 'color: #87CEEB;' : '' }">${ trait.value } (${ rarityPercentage.toFixed(1) }%)</span>`;
             }
         }
 
