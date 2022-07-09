@@ -513,7 +513,7 @@ function getRarityBonus(traitCount) {
             bonus = 1;
         }
     } else {
-        // Rarity bonus only given to traits less than 5%
+        // Rarity bonus only given to traits less than 3%
         if (rarityPercentage <= 0.25) {
             bonus = 10;
         } else if (rarityPercentage <= 0.5) {
