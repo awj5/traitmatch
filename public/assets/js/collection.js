@@ -60,11 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Incase hover gets stuck on mobile
-    /* hover.addEventListener('click', () => {
-        hideTraitHintsHover();
-    }); */
-
     const items = document.querySelectorAll('#game-board a');
     var delay;
     var traitOverlay;
@@ -346,6 +341,13 @@ async function loadItem(num, item, date, swapped) {
                 results.style.backgroundColor = ''; // Reset
                 results.innerHTML = ''; // Clear
                 image.classList.add('scale-up-1-025'); // Scale in
+                
+                // Set bg color for rounded corner images
+                setTimeout(() => {
+                    if (date === window.shuffleDate) {
+                        image.classList.add('finished');
+                    }
+                }, 250);
             }
 
             image.onload = null;
