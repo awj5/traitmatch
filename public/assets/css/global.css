@@ -208,6 +208,16 @@ section {
     background: #111;
 }
 
+@media only screen and (max-width: 768px) {
+    .section-wrapper {
+        padding-bottom: 32px;
+    }
+    
+    .section-wrapper h2 {
+        margin-top: 12px;
+    }
+}
+
 /* Header */
 
 header {
