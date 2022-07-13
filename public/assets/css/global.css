@@ -34,6 +34,7 @@ body {
     user-select: none;
     -webkit-user-select: none;
     overflow-anchor: none;
+    -webkit-touch-callout: none;
 }
 
 .dark-mode body {
@@ -212,7 +213,7 @@ section {
     .section-wrapper {
         padding-bottom: 32px;
     }
-    
+
     .section-wrapper h2 {
         margin-top: 12px;
     }

@@ -8,11 +8,11 @@ window.leaderboardsLoadDate;
 
 document.addEventListener('DOMContentLoaded', () => {
     // Mouse events
-    document.querySelector('select#leaderboards-collections').addEventListener('change', (e) => {
+    document.querySelector('select#leaderboards-collections').addEventListener('change', () => {
         loadLeaderboard();
     });
 
-    document.querySelector('select#leaderboards-range').addEventListener('change', (e) => {
+    document.querySelector('select#leaderboards-range').addEventListener('change', () => {
         loadLeaderboard();
     });
 });

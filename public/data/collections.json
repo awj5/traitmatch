@@ -16,5 +16,14 @@
     "beta": false,
     "featured": false,
     "items": 60
+  },
+  {
+    "slug": "foxfam",
+    "name": "FoxFam",
+    "enabled": false,
+    "contract": "0x7cba74d0b16c8e18a9e48d3b7404d7739bb24f23",
+    "beta": false,
+    "featured": false,
+    "items": 60
   }
 ]
