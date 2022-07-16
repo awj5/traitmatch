@@ -63,14 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('#game-board a');
     var delay;
     var traitOverlay;
-    
+
     document.querySelector('#collection-game').addEventListener('touchend', () => {
         hideTraitHintsHover();
-    
+
         setTimeout(() => {
             traitOverlay = false;
         }, 100); // Avoid clash with mouseup
-    
+
         clearTimeout(delay);
     });
 
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadCollection() {
     const loadingIcon = document.querySelector('#collection-loader');
-    
+
     if (window.collection !== window.pattern) {
         window.collection = window.pattern;
         const collectionData = await getOSCollection(window.collection);
@@ -140,14 +140,14 @@ async function loadCollection() {
                     console.error(error);
                 }
             }
-            
+
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [array[i], array[j]] = [array[j], array[i]];
                 }
             }
-            
+
             shuffleArray(nfts); // Shuffle holder NFTs
 
             if (window.collection === window.pattern) {
@@ -175,7 +175,7 @@ function setItems(slug) {
     if (localStorage['tmItems' + slug]) {
         // Already set
         window.items = JSON.parse(localStorage['tmItems' + slug]);
-        
+
         if (localStorage['tmWildcards' + slug]) {
             window.wildcards = JSON.parse(localStorage['tmWildcards' + slug]);
         }
@@ -233,7 +233,7 @@ function shuffle(manual) {
         if (window.collection === window.pattern) {
             game.style.visibility = 'visible'; // Show
         }
-        
+
         setItem(1, date, true); // Set first item
 
         // Instructions
@@ -250,7 +250,7 @@ function resetItem(num, shuffled) {
     item.style.pointerEvents = '';
     item.setAttribute('class', '');
     const results = item.querySelector('p');
-    
+
     if (shuffled) {
         results.classList.remove('fade-in-1-025'); // Hide
     } else {
@@ -258,7 +258,7 @@ function resetItem(num, shuffled) {
         results.style.backgroundColor = 'transparent';
         results.innerHTML = ''; // Clear
     }
-    
+
     const image = item.querySelector('img');
     image.setAttribute('class', '');
     image.setAttribute('src', '');
@@ -288,14 +288,14 @@ function setItem(num, date, shuffle, swapped) {
 async function loadItem(num, item, date, swapped) {
     const boardItem = document.querySelector('a#board-item-' + num);
     const results = boardItem.querySelector('p');
-    
+
     // Show loader if image not ready after 1.5 secs
     setTimeout(() => {
         if (results.classList.contains('fade-in-1-025') && date === window.shuffleDate) {
             results.innerHTML = '<div class="loading-icon"></div>'; // Add loader
         }
     }, 1500);
-    
+
     const asset = await getData(`/api/nft/${ window.contract }/${ item }`);
     //console.log(asset);
 
@@ -320,7 +320,7 @@ async function loadItem(num, item, date, swapped) {
         if (window.collectionTokens.includes(item.toString()) && !boardItem.classList.contains('wildcard')) {
             boardItem.classList.add('wildcard');
         }
-        
+
         // Instructions
         if (document.querySelector('#collection-game').style.visibility === 'visible' && localStorage['tmOB3'] && document.querySelector('#overlay').style.display !== 'flex' && boardItem.classList.contains('wildcard')) {
             toggleOverlay('Wildcard Detected!', 'NFTs you own and also ones with rare 1/1 traits are wildcards that can be matched with any other NFT to receive a special bonus. Wildcards have a <span style="color: #FFFF00;">yellow</span> border when selected.');
@@ -331,7 +331,7 @@ async function loadItem(num, item, date, swapped) {
             // 20 items cleared so restart count resets
             document.querySelector('#game-controls').classList.add('enabled');
             localStorage['tmRestarts' + window.collection] = 0; // Reset
-        } else if ((num === 20 || num === window.items.length) && parseInt(localStorage['tmRestarts' + window.collection]) !== 3) {
+        } else if ((num === 20 || num === window.items.length) && parseInt(localStorage['tmRestarts' + window.collection]) < 3) {
             document.querySelector('#game-controls').classList.add('enabled');
         }
 
@@ -341,7 +341,7 @@ async function loadItem(num, item, date, swapped) {
                 results.style.backgroundColor = ''; // Reset
                 results.innerHTML = ''; // Clear
                 image.classList.add('scale-up-1-025'); // Scale in
-                
+
                 // Set bg color for rounded corner images
                 setTimeout(() => {
                     if (date === window.shuffleDate) {
@@ -393,9 +393,9 @@ function restart(confirm) {
         localStorage['tmRestarts' + window.collection] = (localStorage['tmRestarts' + window.collection] ? parseInt(localStorage['tmRestarts' + window.collection]) : 0) + 1; // Count collection restarts
         setItems(window.collection); // Get new selection
         shuffle(true);
-        
+
         // Too many restarts
-        if (confirm && document.querySelector('#overlay').style.display !== 'flex' && parseInt(localStorage['tmRestarts' + window.collection]) === 3) {
+        if (confirm && document.querySelector('#overlay').style.display !== 'flex' && parseInt(localStorage['tmRestarts' + window.collection]) >= 3) {
             toggleOverlay('Woah!', 'Sorry fren but you have restarted 3 times so to keep things fair you will now need to match at least 20 NFTs before you can restart again 👮');
         }
     }
@@ -469,7 +469,7 @@ function matchTraits(num, date) {
             }
         }
     }
-    
+
     // Store wildcard so can't be used again
     if (selected.classList.contains('wildcard') && !window.wildcards.includes(selectedToken)) {
         window.wildcards.push(selectedToken);
@@ -592,7 +592,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
             } else if (!window.items.length || window.boardItems.length < 20 && !checkMatches()) {
                 var gameOverTitle = 'WAGMI!';
                 var gameOverNote = 'Woo hoo! You cleared the board 🎉 Well done fren.';
-                
+
                 if (!window.items.length) {
                     // Board cleared
                     confetti();
@@ -601,14 +601,14 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
                     gameOverTitle = 'Game Over';
                     gameOverNote = 'No more matches can be made. But don\'t worry fren, your score has still been recorded. Try to clear the board next time for an extra bonus 💪';
                 }
-                
+
                 toggleOverlay(gameOverTitle, `${ gameOverNote }<br /><br />You scored <span style="color: #87CEEB;">${ window.scoreTotal }</span><br />Your high score is <span style="color: #FFFF00;" id="overlay-high-score"></span><br /><br /><a href="javascript: shareScore(${ window.scoreTotal }, ${ window.scoreMatches }, ${ window.scoreRarity }, ${ window.scoreStreak });" id="game-over-share">Share<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.05 40"><path d="M30.35,40a5.7,5.7,0,0,1-5.7-5.7,5.6,5.6,0,0,1,.08-.83A4.61,4.61,0,0,1,25,32.6L9.8,23.8A5.69,5.69,0,0,1,8,25.17a5.16,5.16,0,0,1-2.25.53,5.49,5.49,0,0,1-4-1.68,5.7,5.7,0,0,1,0-8.07,5.5,5.5,0,0,1,4-1.65,5.52,5.52,0,0,1,2.2.45,6,6,0,0,1,1.9,1.3L25,7.35a3.43,3.43,0,0,1-.23-.8,5.12,5.12,0,0,1-.07-.85,5.49,5.49,0,0,1,1.67-4.05A5.69,5.69,0,0,1,36.05,5.7a5.54,5.54,0,0,1-1.65,4,5.49,5.49,0,0,1-4,1.67A6.73,6.73,0,0,1,28.12,11,4.27,4.27,0,0,1,26.3,9.8L11.15,18.2a8.51,8.51,0,0,1,.17.92,5.36,5.36,0,0,1,.08.88,3.43,3.43,0,0,1-.08.75c-.05.27-.1.53-.17.8l15.15,8.6a5.78,5.78,0,0,1,4.05-1.55,5.71,5.71,0,0,1,4,9.73A5.49,5.49,0,0,1,30.35,40Zm0-31.6a2.66,2.66,0,0,0,2.7-2.7,2.7,2.7,0,1,0-5.4,0,2.65,2.65,0,0,0,2.7,2.7ZM5.7,22.7A2.65,2.65,0,0,0,8.4,20a2.66,2.66,0,0,0-2.7-2.7A2.63,2.63,0,0,0,3,20a2.65,2.65,0,0,0,2.7,2.7ZM30.35,37a2.7,2.7,0,1,0,0-5.4,2.7,2.7,0,1,0,0,5.4Z"/></svg></a><span id="share-copied">Copied to clipboard!</span>`);
-                
+
                 if (!window.demo) {
                     recordScore(window.scoreTotal);
                     getHighScore(window.scoreTotal);
                 }
-                
+
                 restart(false);
             } else if (document.querySelector('#collection-game').style.visibility === 'visible' && !localStorage['tmOB3']) {
                 // Instructions
@@ -626,7 +626,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
             if (highScore.length && highScore[0].score > score) {
                 score = highScore[0].score;
             }
-            
+
             if (document.querySelector('span#overlay-high-score')) {
                 document.querySelector('span#overlay-high-score').textContent = score; // Add to overlay
             }
@@ -780,7 +780,7 @@ function streakBroken(date) {
     localStorage['tmScoreTotal' + window.collection] = JSON.stringify(window.scoreTotal);
     localStorage['tmScoreStreak' + window.collection] = JSON.stringify(window.scoreStreak);
     window.streak = false;
-    
+
     // Animate streak score
     if (diff) {
         window.streakAnimating = true;
@@ -809,14 +809,14 @@ function streakBroken(date) {
 function updateCounter(shuffled) {
     const counter = document.querySelector('span.counter');
     counter.textContent = `${ window.gameItemCount - window.items.length }/${ window.gameItemCount }`;
-    
+
     if (!shuffled && !counter.classList.contains('bounce')) {
         counter.classList.add('bounce'); // Bounce
         counter.style.fontSize = window.innerWidth > 960 ? '30px' : '24px'; // Different sizes for DT and mobile
-        
+
         setTimeout(() => {
             counter.style.fontSize = '';
-            
+
             setTimeout(() => {
                 counter.classList.remove('bounce'); // Reset
             }, 200);
