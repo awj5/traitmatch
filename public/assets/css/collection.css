@@ -70,14 +70,6 @@ section#section-collection {
     aspect-ratio: 4/4;
 }
 
-#game-board a img.finished {
-    background-color: #111;
-}
-
-.dark-mode #game-board a img.finished {
-    background-color: #EEE;
-}
-
 #game-board a p {
     position: absolute;
     width: 100%;

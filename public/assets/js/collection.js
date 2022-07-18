@@ -314,6 +314,38 @@ async function loadItem(num, item, date, swapped) {
             if (rarityPercentage <= 0.1 && !boardItem.classList.contains('wildcard')) {
                 boardItem.classList.add('wildcard');
             }
+
+            // Fix for BAYC rounded corners
+            if (window.collection === 'boredapeyachtclub' && trait.trait_type === 'Background') {
+                switch (trait.value.toLowerCase()) {
+                    case 'army green':
+                        image.style.backgroundColor = '#717234';
+                        break;
+                    case 'orange':
+                        image.style.backgroundColor = '#EF972D';
+                        break;
+                    case 'gray':
+                        image.style.backgroundColor = '#CCCDCE';
+                        break;
+                    case 'new punk blue':
+                        image.style.backgroundColor = '#3B677E';
+                        break;
+                    case 'aquamarine':
+                        image.style.backgroundColor = '#19E7B6';
+                        break;
+                    case 'purple':
+                        image.style.backgroundColor = '#6F5E70';
+                        break;
+                    case 'blue':
+                        image.style.backgroundColor = '#A3E6F5';
+                        break;
+                    case 'yellow':
+                        image.style.backgroundColor = '#E4E4A9';
+                        break;
+                    default:
+                        image.style.backgroundColor = '';
+                }
+            }
         }
 
         // Detect if user owns item and make wildcard
@@ -341,13 +373,6 @@ async function loadItem(num, item, date, swapped) {
                 results.style.backgroundColor = ''; // Reset
                 results.innerHTML = ''; // Clear
                 image.classList.add('scale-up-1-025'); // Scale in
-
-                // Set bg color for rounded corner images
-                setTimeout(() => {
-                    if (date === window.shuffleDate) {
-                        image.classList.add('finished');
-                    }
-                }, 250);
             }
 
             image.onload = null;
