@@ -18,10 +18,10 @@
     "items": 60
   },
   {
-    "slug": "foxfam",
-    "name": "FoxFam",
+    "slug": "doodles-official",
+    "name": "Doodles",
     "enabled": false,
-    "contract": "0x7cba74d0b16c8e18a9e48d3b7404d7739bb24f23",
+    "contract": "0x8a90cab2b38dba80c64b7734e58ee1db38b8992e",
     "beta": false,
     "featured": false,
     "items": 60
