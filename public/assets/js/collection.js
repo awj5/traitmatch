@@ -309,7 +309,7 @@ async function loadItem(num, item, date, swapped) {
         // Detect wildcard (<= 0.1%)
         for (let x = 0; x < traits.length; x++) {
             let trait = traits[x];
-            let rarityPercentage = window.collectionTraits[trait.trait_type][trait.value.toLowerCase()] / window.collectionTotalCount * 100;
+            let rarityPercentage = window.collectionTraits[trait.trait_type][trait.value.toLowerCase().trim()] / window.collectionTotalCount * 100;
 
             if (rarityPercentage <= 0.1 && !boardItem.classList.contains('wildcard')) {
                 boardItem.classList.add('wildcard');
@@ -446,7 +446,7 @@ function matchTraits(num, date) {
         let prevTrait = prevTraits[x];
 
         // Point and bonus for all traits (less than 50%) if wildcard
-        if ((prevItem.classList.contains('wildcard') || selected.classList.contains('wildcard')) && window.collectionTraits[prevTrait.trait_type][prevTrait.value.toLowerCase()] < window.collectionTotalCount / 2) {
+        if ((prevItem.classList.contains('wildcard') || selected.classList.contains('wildcard')) && window.collectionTraits[prevTrait.trait_type][prevTrait.value.toLowerCase().trim()] < window.collectionTotalCount / 2) {
             // Detect if wildcard already used
             if (selected.classList.contains('wildcard') && window.wildcards.includes(selectedToken)) {
                 matchesFound = !matchesFound ? 1 : matchesFound; // Only 1 match point
@@ -458,7 +458,7 @@ function matchTraits(num, date) {
             // Loop all traits in currently selected
             for (let x = 0; x < selectedTraits.length; x++) {
                 let selectedTrait = selectedTraits[x];
-                let selectedTraitCount = window.collectionTraits[selectedTrait.trait_type][selectedTrait.value.toLowerCase()];
+                let selectedTraitCount = window.collectionTraits[selectedTrait.trait_type][selectedTrait.value.toLowerCase().trim()];
 
                 // Only match traits that are less than 50%
                 if (selectedTrait.trait_type === prevTrait.trait_type && selectedTrait.value === prevTrait.value && selectedTraitCount < window.collectionTotalCount / 2) {
@@ -664,7 +664,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
             for (let x = 0; x < itemTraits.length; x++) {
                 let trait = itemTraits[x];
-                let traitCount = window.collectionTraits[trait.trait_type][trait.value.toLowerCase()];
+                let traitCount = window.collectionTraits[trait.trait_type][trait.value.toLowerCase().trim()];
                 let filter = traits.filter(obj => obj.trait_type === trait.trait_type && obj.value === trait.value);
 
                 if (filter.length === 0) {
@@ -833,7 +833,7 @@ function showTraitHintsHover(item, num) {
         // Get traits
         for (let x = 0; x < traits.length; x++) {
             let trait = traits[x];
-            let traitCount = window.collectionTraits[trait.trait_type][trait.value.toLowerCase()];
+            let traitCount = window.collectionTraits[trait.trait_type][trait.value.toLowerCase().trim()];
 
             // Only traits less than 50% rarity
             if (traitCount < window.collectionTotalCount / 2) {
