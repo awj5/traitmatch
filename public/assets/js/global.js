@@ -213,14 +213,14 @@ async function connectWallet(slug) {
         if (accounts) {
             // Has account
             walletConnected(accounts[0]);
-            
+
             // Home collections
             if (window.pattern === 'home' && !slug) {
                 const accountCollections = await getAccountCollections(accounts[0]);
-                
+
                 for (let x = 0; x < window.homeCollections.length; x++) {
                     let slug = window.homeCollections[x].slug;
-                    
+
                     if (window.pattern === 'home' && document.querySelector('#home-collection-' + slug)) {
                         let link = document.querySelector(`#home-collection-${ slug } a`);
                         link.textContent = getHomeCollectionButton(slug, accounts[0], accountCollections)[0];
@@ -349,7 +349,8 @@ function resetCollectionNav() {
 function toggleOverlay(heading, blurb) {
     const overlay = document.querySelector('#overlay');
 
-    if (overlay.style.display === 'flex' && window.getComputedStyle(overlay).opacity === '1') {
+    // Wait at least 2 secs before being able to close
+    if (overlay.style.display === 'flex' && window.overlayDate < Date.now() - 2000) {
         // Hide
         overlay.style.display = '';
         overlay.style.opacity = '';
@@ -408,12 +409,12 @@ async function loadOverlayCollections() {
                     if (!count) {
                         overlayBody.innerHTML = ''; // Remove loader
                     }
-                    
+
                     collectionLink.querySelector('img').setAttribute('src', collection.image_url);
                     collectionLink.classList.add((count + 1) % 2 === 0 ? 'overlay-collection-right' : 'overlay-collection-left'); // Left or right column on DT
                     overlayBody.appendChild(collectionLink); // Append collection to overlay body
                     count++;
-                    
+
                     // Click
                     collectionLink.addEventListener('click', (e) => {
                         history.pushState(null, null, slug); // Redirect to collection
