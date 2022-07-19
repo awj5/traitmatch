@@ -619,19 +619,15 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
     }, 3250);
 
     async function getHighScore(score) {
-        try {
-            const highScore = await getData(`${ window.apiURL }score/${ window.collection }/${ await getWalletAddress() }`);
+        const highScore = await getData(`${ window.apiURL }score/${ window.collection }/${ await getWalletAddress() }`);
 
-            // Is latest score the highest?
-            if (highScore.length && highScore[0].score > score) {
-                score = highScore[0].score;
-            }
+        // Is latest score the highest?
+        if (highScore.length && highScore[0].score > score) {
+            score = highScore[0].score;
+        }
 
-            if (document.querySelector('span#overlay-high-score')) {
-                document.querySelector('span#overlay-high-score').textContent = score; // Add to overlay
-            }
-        } catch (error) {
-            console.error(error);
+        if (document.querySelector('span#overlay-high-score')) {
+            document.querySelector('span#overlay-high-score').textContent = score; // Add to overlay
         }
     }
 
