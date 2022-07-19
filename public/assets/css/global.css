@@ -12,21 +12,32 @@
     src: url("../fonts/Nurom-Bold.woff2") format("woff");
 }
 
+/* Vars */
+
+:root {
+  --tm-light: #EEE;
+  --tm-dark: #111;
+  --tm-gray: #999;
+  --tm-red: #F00;
+  --tm-yellow: #FFD700;
+  --tm-blue: #87CEEB;
+}
+
 /* Set-up */
 
 html {
     visibility: hidden; /* Hack to avoid FOUC */
-    background-color: #EEE;
+    background-color: var(--tm-light);
 }
 
 html.dark-mode {
-    background-color: #111;
+    background-color: var(--tm-dark);
 }
 
 body {
     font-family: "Nurom-Bold", sans-serif;
     font-size: 14px;
-    color: #111;
+    color: var(--tm-dark);
     line-height: 0;
     margin: 0;
     -webkit-tap-highlight-color: transparent;
@@ -38,7 +49,7 @@ body {
 }
 
 .dark-mode body {
-    color: #EEE;
+    color: var(--tm-light);
 }
 
 h1,
@@ -60,22 +71,22 @@ p {
 }
 
 a {
-    color: #111;
+    color: var(--tm-dark);
     text-decoration: none;
 }
 
 .dark-mode a {
-    color: #EEE;
+    color: var(--tm-light);
 }
 
 .no-touch a:hover,
 a:active {
-    color: #999;
+    color: var(--tm-gray);
 }
 
 .no-touch a:hover svg,
 a:active svg {
-    fill: #999 !important;
+    fill: var(--tm-gray) !important;
 }
 
 /* Forms */
@@ -83,8 +94,8 @@ a:active svg {
 select {
     appearance: none;
     outline: none;
-    border: 4px solid #111;
-    background-color: #EEE;
+    border: 4px solid var(--tm-dark);
+    background-color: var(--tm-light);
     font-size: 18px;
     padding: 10px;
     padding-right: 40px;
@@ -93,15 +104,15 @@ select {
     background-repeat: no-repeat;
     background-size: 20px 12px;
     background-position: center right 10px;
-    color: #111;
+    color: var(--tm-dark);
     border-radius: 0;
 }
 
 .dark-mode select {
-    border-color: #EEE;
-    background-color: #111;
+    border-color: var(--tm-light);
+    background-color: var(--tm-dark);
     background-image: url('../img/dropdown-arrow-dark.png');
-    color: #EEE;
+    color: var(--tm-light);
 }
 
 /* Animation */
@@ -157,11 +168,11 @@ img.collection-icon {
     border-radius: 999px;
     vertical-align: -10px;
     margin-right: 8px;
-    background-color: #111;
+    background-color: var(--tm-dark);
 }
 
 .dark-mode img.collection-icon {
-    background-color: #EEE;
+    background-color: var(--tm-light);
 }
 
 section {
@@ -187,12 +198,12 @@ section {
     width: 16px;
     height: 16px;
     border-radius: 999px;
-    border: 4px solid #111;
+    border: 4px solid var(--tm-dark);
     animation: rotating linear .5s infinite;
 }
 
 .dark-mode .loading-icon {
-    border-color: #EEE;
+    border-color: var(--tm-light);
 }
 
 .loading-icon:after {
@@ -202,11 +213,11 @@ section {
     height: 12px;
     margin-left: 8px;
     margin-top: 8px;
-    background: #EEE;
+    background: var(--tm-light);
 }
 
 .dark-mode .loading-icon:after {
-    background: #111;
+    background: var(--tm-dark);
 }
 
 @media only screen and (max-width: 768px) {
@@ -224,16 +235,16 @@ section {
 header {
     width: 100%;
     height: 48px;
-    border-bottom: 4px solid #111;
+    border-bottom: 4px solid var(--tm-dark);
     position: fixed;
     top: 0;
-    background-color: #EEE;
+    background-color: var(--tm-light);
     z-index: 2;
 }
 
 .dark-mode header {
-    border-color: #EEE;
-    background-color: #111;
+    border-color: var(--tm-light);
+    background-color: var(--tm-dark);
 }
 
 h1 {
@@ -245,12 +256,12 @@ h1 {
 
 .no-touch h1 a:hover,
 h1 a:active {
-    color: #111;
+    color: var(--tm-dark);
 }
 
 .dark-mode .no-touch h1 a:hover,
 .dark-mode h1 a:active {
-    color: #EEE;
+    color: var(--tm-light);
 }
 
 h1 img {
@@ -269,7 +280,7 @@ a#header-burger {
 
 a#header-burger span {
     width: 100%;
-    background-color: #111;
+    background-color: var(--tm-dark);
     height: 4px;
     display: inline-block;
     margin-top: 2px;
@@ -277,7 +288,7 @@ a#header-burger span {
 }
 
 .dark-mode a#header-burger span {
-    background-color: #EEE;
+    background-color: var(--tm-light);
 }
 
 nav {
@@ -295,7 +306,7 @@ a.nav-item {
 }
 
 a.nav-item.selected {
-    color: #999;
+    color: var(--tm-gray);
     pointer-events: none;
 }
 
@@ -347,12 +358,12 @@ a#nav-twitter {
 }
 
 a.nav-footer-item svg {
-    fill: #111;
+    fill: var(--tm-dark);
     width: 24px;
 }
 
 .dark-mode a.nav-footer-item svg {
-    fill: #EEE;
+    fill: var(--tm-light);
 }
 
 a#nav-twitter svg {
@@ -377,7 +388,7 @@ a#nav-twitter svg {
     nav {
         position: fixed;
         width: 100%;
-        background-color: #EEE;
+        background-color: var(--tm-light);
         top: 52px;
         padding-top: 8px;
         height: calc(100% - 60px);
@@ -443,17 +454,17 @@ a#nav-twitter svg {
 }
 
 #overlay-window {
-    background-color: #EEE;
+    background-color: var(--tm-light);
     padding: 16px;
     padding-top: 32px;
     width: 480px;
-    border: 4px solid #111;
+    border: 4px solid var(--tm-dark);
     box-sizing: border-box;
 }
 
 .dark-mode #overlay-window {
-    background-color: #111;
-    border-color: #EEE;
+    background-color: var(--tm-dark);
+    border-color: var(--tm-light);
 }
 
 a#overlay-close {
@@ -464,12 +475,12 @@ a#overlay-close {
 }
 
 a#overlay-close svg {
-    fill: #111;
+    fill: var(--tm-dark);
     height: 32px;
 }
 
 .dark-mode a#overlay-close svg {
-    fill: #EEE;
+    fill: var(--tm-light);
 }
 
 #overlay-window h2 {
@@ -512,7 +523,7 @@ a.overlay-collection {
     font-size: 18px;
     width: calc(50% - 8px);
     margin-top: 16px;
-    border: 4px solid #111;
+    border: 4px solid var(--tm-dark);
     padding: 6px;
     box-sizing: border-box;
     cursor: pointer;
@@ -520,22 +531,22 @@ a.overlay-collection {
 
 .no-touch a.overlay-collection:hover,
 a.overlay-collection:active {
-    border-color: #999;
+    border-color: var(--tm-gray);
 }
 
 .dark-mode a.overlay-collection {
-    border-color: #EEE;
+    border-color: var(--tm-light);
 }
 
 .overlay-collections a.selected {
-    background-color: #111;
-    color: #EEE;
+    background-color: var(--tm-dark);
+    color: var(--tm-light);
     pointer-events: none;
 }
 
 .dark-mode .overlay-collections a.selected {
-    background-color: #EEE;
-    color: #111;
+    background-color: var(--tm-light);
+    color: var(--tm-dark);
 }
 
 a.overlay-collection-right {
@@ -543,13 +554,13 @@ a.overlay-collection-right {
 }
 
 #overlay-window .overlay-collections p {
-    color: #FF0000;
+    color: var(--tm-red);
     font-size: 16px;
     text-align: center;
 }
 
 #overlay-window .overlay-collections p a {
-    color: #FF0000;
+    color: var(--tm-red);
 }
 
 @media only screen and (max-width: 768px) {

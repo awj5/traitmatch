@@ -28,18 +28,18 @@ section#section-collection {
 
 #game-board {
     height: calc(100% - 4px);
-    border: 2px solid #111;
+    border: 2px solid var(--tm-dark);
     aspect-ratio: 5/4;
 }
 
 .dark-mode #game-board {
-    border-color: #EEE;
+    border-color: var(--tm-light);
 }
 
 #game-board a {
     height: 25%;
     float: left;
-    border: 2px solid #111;
+    border: 2px solid var(--tm-dark);
     box-sizing: border-box;
     pointer-events: none;
     position: relative;
@@ -48,7 +48,7 @@ section#section-collection {
 }
 
 .dark-mode #game-board a {
-    border-color: #EEE;
+    border-color: var(--tm-light);
 }
 
 #game-board a.selected {
@@ -82,7 +82,7 @@ section#section-collection {
     flex-direction: column;
     font-size: 16px;
     opacity: 0;
-    color: #EEE;
+    color: var(--tm-light);
     line-height: 2;
 }
 
@@ -97,15 +97,15 @@ section#section-collection {
 }
 
 svg.svg-star {
-    fill: #FFD700 !important;
+    fill: var(--tm-yellow) !important;
 }
 
 svg.svg-diamond {
-    fill: #87CEEB !important;
+    fill: var(--tm-blue) !important;
 }
 
 svg.svg-heart {
-    fill: #FF0000 !important;
+    fill: var(--tm-red) !important;
 }
 
 #collection-game aside {
@@ -145,14 +145,14 @@ h3#game-item-counter span.game-heading {
 }
 
 #collection-game aside svg {
-    fill: #111;
+    fill: var(--tm-dark);
     vertical-align: -7px;
     margin-right: 4px;
     height: 32px;
 }
 
 .dark-mode #collection-game aside svg {
-    fill: #EEE;
+    fill: var(--tm-light);
 }
 
 #game-controls {
@@ -187,7 +187,7 @@ h3#game-item-counter span.game-heading {
     vertical-align: text-top;
     margin: 0;
     margin-right: 6px;
-    accent-color: #111;
+    accent-color: var(--tm-dark);
 }
 
 @-moz-document url-prefix() {
@@ -197,7 +197,7 @@ h3#game-item-counter span.game-heading {
 }
 
 .dark-mode #game-controls input {
-    accent-color: #EEE;
+    accent-color: var(--tm-light);
 }
 
 .score-icon {
@@ -219,7 +219,7 @@ h3#game-item-counter span.game-heading {
     background-color: rgba(0, 0, 0, 0.9);
     z-index: 2;
     display: none;
-    color: #EEE;
+    color: var(--tm-light);
     padding: 12px;
     box-sizing: border-box;
     flex-direction: column;
@@ -234,7 +234,7 @@ h3#game-item-counter span.game-heading {
     display: none;
     width: 288px;
     margin-top: 20px;
-    border: 4px solid #EEE;
+    border: 4px solid var(--tm-light);
     user-drag: none;
     -webkit-user-drag: none;
 }
@@ -245,36 +245,36 @@ h3#game-item-counter span.game-heading {
 }
 
 span#hover-type {
-    color: #999;
+    color: var(--tm-gray);
 }
 
 a#game-over-share {
     text-decoration: none !important;
     font-size: 16px;
-    border: 4px solid #111;
+    border: 4px solid var(--tm-dark);
     padding: 8px;
     display: inline-block;
     line-height: 1;
 }
 
 .dark-mode a#game-over-share {
-    border-color: #EEE;
+    border-color: var(--tm-light);
 }
 
 .no-touch a#game-over-share:hover,
 a#game-over-share:active {
-    border-color: #999;
+    border-color: var(--tm-gray);
 }
 
 a#game-over-share svg {
-    fill: #111;
+    fill: var(--tm-dark);
     height: 20px;
     margin-left: 8px;
     vertical-align: -4px;
 }
 
 .dark-mode a#game-over-share svg {
-    fill: #EEE;
+    fill: var(--tm-light);
 }
 
 span#share-copied {
@@ -456,6 +456,6 @@ span#share-copied {
 
 @media only screen and (max-width: 768px) {
     .dark-mode #game-controls input {
-        accent-color: #999;
+        accent-color: var(--tm-gray);
     }
 }
