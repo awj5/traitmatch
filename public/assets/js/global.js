@@ -4,6 +4,7 @@
 
 window.touchScreen = false;
 window.overlayDate;
+window.apiURL = location.hostname === 'localhost' ? '/api/' : 'https://www.traitmatch.io/api/';
 
 /* On DOM load */
 
@@ -260,7 +261,7 @@ async function getAccountCollections(address) {
 
     if (address) {
         try {
-            var contracts = await getData('/api/contracts/' + address);
+            var contracts = await getData(window.apiURL + 'contracts/' + address);
             var nfts = contracts.ownedNfts;
             const supported = await getSupportedCollections();
             var page;
@@ -269,7 +270,7 @@ async function getAccountCollections(address) {
             for (let x = 0; x < Math.ceil(contracts.totalCount / 100); x++) {
                 if (x > 0) {
                     // Not first page
-                    contracts = await getData(`/api/contracts/${ address }/${ page }`);
+                    contracts = await getData(`${ window.apiURL }contracts/${ address }/${ page }`);
                     nfts = contracts.ownedNfts;
                 }
 

@@ -2,8 +2,8 @@
 
 import Express from 'express'
 import Cors from 'cors'
-import DB from './queries.js'
-import Alchemy from './alchemy.js'
+import DB from './api/queries.js'
+import Alchemy from './api/alchemy.js'
 import Path from 'path';
 const app = Express()
 const port = process.env.PORT || 3001
@@ -39,7 +39,7 @@ router.get('/*', function (req, res, next) {
     }
 });
 
-/* Endpoints */
+/* API endpoints */
 
 app.post('/api/scores', DB.addScore)
 app.get('/api/score/:slug/:wallet/:range?', DB.getUserScore)

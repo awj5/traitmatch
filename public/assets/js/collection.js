@@ -134,7 +134,7 @@ async function loadCollection() {
             // Get user collection owned NFTs
             if (!window.demo) {
                 try {
-                    const tokens = await getData(`/api/nfts/${ await getWalletAddress() }/${ window.contract }`);
+                    const tokens = await getData(`${ window.apiURL }nfts/${ await getWalletAddress() }/${ window.contract }`);
                     nfts = tokens.ownedNfts;
                 } catch (error) {
                     console.error(error);
@@ -296,7 +296,7 @@ async function loadItem(num, item, date, swapped) {
         }
     }, 1500);
 
-    const asset = await getData(`/api/nft/${ window.contract }/${ item }`);
+    const asset = await getData(`${ window.apiURL }nft/${ window.contract }/${ item }`);
     //console.log(asset);
 
     if (asset && asset.metadata && date === window.shuffleDate) {
@@ -620,7 +620,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
 
     async function getHighScore(score) {
         try {
-            const highScore = await getData(`/api/score/${ window.collection }/${ await getWalletAddress() }`);
+            const highScore = await getData(`${ window.apiURL }score/${ window.collection }/${ await getWalletAddress() }`);
 
             // Is latest score the highest?
             if (highScore.length && highScore[0].score > score) {
@@ -643,7 +643,7 @@ function showMatchResult(date, prevSelectedItem, prevItem, matchesFound, rarityB
             token: window.collectionTokens[0]
         };
 
-        postData('/api/scores', obj); // Insert
+        postData(window.apiURL + 'scores', obj); // Insert
     }
 
     function checkMatches() {

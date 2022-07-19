@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function leaderboards() {
     const collections = document.querySelector('select#leaderboards-collections');
-    
+
     // Set collections dropdown (once only)
     if (!collections.querySelectorAll('option').length) {
         const collectionsData = await getSupportedCollections();
-        
+
         for (let x = 0; x < collectionsData.length; x++) {
             if (collectionsData[x].featured) {
                 let option = document.createElement('option');
@@ -53,7 +53,7 @@ async function loadLeaderboard() {
     const range = document.querySelector('select#leaderboards-range').value;
     const slug = collections.value;
     const collection = await getOSCollection(slug); // Get thumbnail
-    const scores = await getData(`/api/scores/${ slug }/${ range }`);
+    const scores = await getData(`${ window.apiURL }scores/${ slug }/${ range }`);
     const walletAddress = await getWalletAddress();
 
     if (window.leaderboardsLoadDate === date) {
@@ -61,7 +61,7 @@ async function loadLeaderboard() {
         const name = collections.selectedOptions[0].text;
         const heading = document.querySelector('#leaderboards-collection h3');
         const image = heading.querySelector('img');
-        
+
         if (name !== heading.textContent) {
             image.src = collection.image_url;
             image.alt = name;
@@ -71,7 +71,7 @@ async function loadLeaderboard() {
         // High score
         if (walletAddress) {
             const highScore = document.querySelector('p#leaderboards-collection-hs');
-            const highScoreData = await getData(`/api/score/${ slug }/${ walletAddress }/${ range }`);
+            const highScoreData = await getData(`${ window.apiURL }score/${ slug }/${ walletAddress }/${ range }`);
 
             if (highScoreData.length) {
                 // Show
