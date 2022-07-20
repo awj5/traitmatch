@@ -2,7 +2,7 @@
 
 /* Global vars */
 
-window.touchScreen = false;
+window.touchScreen;
 window.overlayDate;
 window.apiURL = location.hostname === 'localhost' ? '/api/' : 'https://www.traitmatch.io/api/';
 
