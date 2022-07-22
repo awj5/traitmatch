@@ -51,7 +51,7 @@ async function start() {
     }
 
     // Pattern
-    let patrn = new Pattern();
+    const patrn = new Pattern();
     patrn.init();
 
     // Check if wallet already connected
